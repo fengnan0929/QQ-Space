@@ -1,0 +1,56 @@
+.container-wrap{
+    background-color: #a2c9d2;
+}
+.container{
+    background-color:#FFF;
+}
+.bg{
+    margin-top: 0;
+}
+
+.log-head{
+    padding:20px;
+}
+
+.control-label{
+    font-size: 16px;
+}
+
+.controls {
+    margin-bottom: 10px;
+}
+
+.controls input[type='text'],.controls input[type='email'],.controls input[type='password'],.controls input[type='number']{
+    width:400px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size:14px;
+}
+.controls input[type='email']{
+    margin-bottom: 20px;
+}
+.controls textarea{
+    width:400px;
+    height: 60px;
+    font-size:14px
+}
+
+.controls select{
+    height: 40px;
+    background-color: #FFFFFF;
+    font-size:14px;
+    margin-bottom: 10px;
+}
+
+.controls .sub-button{
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    font-size:16px;
+    background-color: #07A8C5;
+    color: #FFFFFF;
+}
+.controls .sub-button:hover{
+    opacity: 0.8;
+}

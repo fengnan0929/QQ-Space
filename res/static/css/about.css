@@ -1,0 +1,65 @@
+.logo{
+    margin-top: 20px !important;
+}
+
+.layui-input {
+    margin-bottom: 44px !important;
+}
+.pull-right a {
+    text-decoration: none;
+}
+.nick{
+    width: 200px;
+    position: absolute;
+    left: 130px;
+    bottom: 15px;
+    font-size: 24px;
+}
+.bg{
+    margin-top: 80px;
+}
+.fileUpload{
+    width:275px;
+    height: 90px;
+    float: left;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin-right: 20px;
+}
+.fileUpload input{
+    position:absolute;
+    width: 90px;
+    height: 90px;
+    right: 0px;
+    top: 0px;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+}
+
+.fileUpload span{
+    display: inline-block;
+    width: 90px;
+    height: 90px;
+    background: url("../../../res/layui/images/face/100.jpeg") center center;
+    background-size: 100%;
+    float: right;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 140px;
+    font-size: 16px;
+}
+
+textarea{
+    padding: 10px;
+    resize: none;
+}
+/*input不允许更改内容*/
+input[disabled],input:disabled,input.disabled{
+    color: #000000;
+    background-color: #FFFFFF;
+    -webkit-text-fill-color:#000000;
+    -webkit-opacity:1;
+    opacity: 1;
+}

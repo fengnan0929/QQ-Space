@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册-闲言轻博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="res/layui/css/layui.css">
+    <link rel="stylesheet" href="res/static/css/mian.css">
+    <link href="http://cdn.bootcss.com/twitter-bootstrap/2.0.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="res/static/css/register.css">
+</head>
+<body class="lay-blog">
+<div class="bg">
+    <div class="bg-wrap">
+
+    </div>
+</div>
+<div class="container-wrap">
+    <div class="container">
+        <div class="contar-wrap">
+            <form class="form-horizontal log-form">
+                <fieldset>
+                    <div id="legend" class="log-head">
+                        <legend class="">个人资料</legend>
+                    </div>
+                    <div class="control-group">
+                        <!-- Appended input-->
+                        <label class="control-label">邮箱</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="span2" placeholder="请输入邮箱地址" type="email">
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="control-group">
+                            <label class="control-label">密码</label>
+                            <div class="controls">
+                                <input type="password" placeholder="请设置您的密码" class="input-xlarge">
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">确认密码</label>
+                            <div class="controls">
+                                <input type="password" placeholder="请再次输入您设置的密码" class="input-xlarge">
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <label class="control-label">昵称</label>
+                        <div class="controls">
+                            <input type="text" placeholder="请输入您的昵称" class="input-xlarge">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">性别</label>
+                        <div class="controls">
+                            <!-- Inline Radios -->
+                            <label class="radio inline">
+                                <input type="radio" value="男" name="sex" checked="checked">
+                                男
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" value="女" name="sex">
+                                女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+
+                        <!-- Text input-->
+                        <label class="control-label">年龄</label>
+                        <div class="controls">
+                            <input type="number" placeholder="请输入您的年龄" class="input-xlarge">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+
+
+                        <!-- Select Basic -->
+                        <label class="control-label">星座</label>
+                        <div class="controls">
+                            <select class="input-xlarge">
+                                <option>白羊座</option>
+                                <option>金牛座</option>
+                                <option>双子座</option>
+                                <option>巨蟹座</option>
+                                <option>狮子座</option>
+                                <option>天秤座</option>
+                                <option>天蝎座</option>
+                                <option>射手座</option>
+                                <option>摩羯座</option>
+                                <option>水瓶座</option>
+                                <option>双鱼座</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="control-group">
+
+                        <!-- Textarea -->
+                        <label class="control-label">个性签名</label>
+                        <div class="controls">
+                             <div class="textarea">
+                                <textarea type="" class="" > </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"></label>
+
+                        <!-- Button -->
+                        <div class="controls">
+                            <button class="sub-button">注册</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>
+        <span>&copy; 2018</span>
+        <span><a href="http://www.layui.com" target="_blank">浙江大学软件学院</a></span>
+        <span>S403</span>
+    </p>
+    <p><span>人生就是一场修行，祝君猪事顺利</span></p>
+</div>
+<script src="res/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: 'res/static/js/'
+    }).use('blog');
+</script>
+</body>
+</html>

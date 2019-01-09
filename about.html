@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关于-闲言轻博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="res/layui/css/layui.css">
+    <link rel="stylesheet" href="res/static/css/mian.css">
+    <link href="http://cdn.bootcss.com/twitter-bootstrap/2.0.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="res/static/css/register.css">
+    <link rel="stylesheet" href="res/static/css/about.css">
+    <script src="res/jquery/jquery-1.12.4.js"></script>
+</head>
+<body class="lay-blog">
+<div class="header">
+    <div class="header-wrap">
+        <h1 class="logo pull-left">
+            <a href="index.html">
+                <img src="res/static/images/logo.png" alt="" class="logo-img">
+                <img src="res/static/images/logo-text.png" alt="" class="logo-text">
+            </a>
+        </h1>
+        <form class="layui-form blog-seach pull-left" action="">
+            <div class="layui-form-item blog-sewrap">
+                <div class="layui-input-block blog-sebox">
+                    <i class="layui-icon layui-icon-search"></i>
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </form>
+        <div class="blog-nav pull-right">
+            <ul class="layui-nav pull-left">
+                <li class="layui-nav-item"><a href="index.html">首页</a></li>
+                <li class="layui-nav-item"><a href="message.html">留言</a></li>
+                <li class="layui-nav-item  layui-this"><a href="about.html">关于</a></li>
+            </ul>
+            <a href="#" class="personal pull-left  layui-nav-item exit" style="font-size: 16px;">
+                <i class="layui-icon layui-icon-username"></i>
+                退出
+            </a>
+        </div>
+        <div class="mobile-nav pull-right" id="mobile-nav">
+            <a href="javascript:;">
+                <i class="layui-icon layui-icon-more"></i>
+            </a>
+        </div>
+    </div>
+    <ul class="pop-nav" id="pop-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="message.html">留言</a></li>
+        <li><a href="about.html">关于</a></li>
+    </ul>
+</div>
+<div class="bg">
+    <div class="bg-wrap">
+
+    </div>
+</div>
+<div class="container-wrap">
+    <div class="container">
+        <div class="contar-wrap">
+            <form class="form-horizontal log-form">
+                <fieldset>
+                    <div id="legend" class="log-head">
+                        <legend class="">修改资料</legend>
+                    </div>
+
+                    <div class="control-group ">
+                        <label class="control-label"></label>
+                        <div class="controls fileUpload">
+                            <input type="file" id="upload" accept="image/jpg, image/png, image/jpeg, image/gif">
+                            <span class="upload">点击修改</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <!-- Appended input-->
+                        <label class="control-label">邮箱</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="span2 email" type="email" disabled="disabled">
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+
+
+                        <!-- Text input-->
+                        <label class="control-label">昵称</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge nickname">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">性别</label>
+                        <div class="controls">
+                            <!-- Inline Radios -->
+                            <label class="radio inline">
+                                <input type="radio" value="男" name="sex">
+                                男
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" value="女" name="sex">
+                                女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+
+                        <!-- Text input-->
+                        <label class="control-label">年龄</label>
+                        <div class="controls">
+                            <input type="number" class="input-xlarge age">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+
+
+                        <!-- Select Basic -->
+                        <label class="control-label">星座</label>
+                        <div class="controls">
+                            <select class="input-xlarge xinzuo">
+                                <option>白羊座</option>
+                                <option>金牛座</option>
+                                <option>双子座</option>
+                                <option>巨蟹座</option>
+                                <option>狮子座</option>
+                                <option>天秤座</option>
+                                <option>天蝎座</option>
+                                <option>射手座</option>
+                                <option>摩羯座</option>
+                                <option>水瓶座</option>
+                                <option>双鱼座</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+
+                        <!-- Textarea -->
+                        <label class="control-label">个性签名</label>
+                        <div class="controls">
+                            <div class="textarea">
+                                <textarea type="" class="motto"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"></label>
+
+                        <!-- Button -->
+                        <div class="controls">
+                            <button class="sub-button">提交</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>
+        <span>&copy; 2018</span>
+        <span><a href="http://www.layui.com" target="_blank">浙江大学软件学院</a></span>
+        <span>S403</span>
+    </p>
+    <p><span>人生就是一场修行，祝君猪事顺利</span></p>
+</div>
+<script src="res/layui/layui.js"></script>
+<script src="res/jquery/jquery-1.12.4.js"></script>
+<script>
+    layui.config({
+        base: 'res/static/js/'
+    }).use('blog');
+</script>
+
+<script>
+    /*var data = {
+        'personal': {
+            nickname: '哐哐哐',
+            headpic: 'url("res/layui/images/face/100.jpeg")',
+            motto: '我是alone鸭，今年三岁了',
+            sex: "女",
+            age: '3',
+            xinzuo: '天蝎座',
+            email:'233@qq.com'
+        },
+        'static': {dongtai: '248', liuyan: '129'},
+        'dongtailist': [{nickname: "哐哐哐", headpic: "url('res/layui/images/face/100.jpeg')", text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。", time: "2019-01-03  12:50", like: "", pic: "src='res/static/images/item.png'"}, {nickname: "哐哐哐", headpic: "url('res/layui/images/face/100.jpeg')", text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。", time: "2019-01-03  12:50", like: "", pic: "src='res/static/images/item.png'"}, {nickname: "哐哐哐", headpic: "url('res/layui/images/face/100.jpeg')", text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。", time: "2019-01-03  12:50", like: "", pic: "src='res/static/images/item.png'"}],
+        'haoyoulist': [
+            {nickname: '王玲', headpic: "url('res/layui/images/face/100.jpeg')"},
+            {nickname: 'alone鸭', headpic: "url('res/layui/images/face/2.gif')"},
+            {nickname: '王二', headpic: "url('res/layui/images/face/3.gif')"}
+        ]
+    };*/
+    let data = JSON.parse(localStorage.getItem('pdata'));
+
+    $(function () {
+        $('.controls .email').val(data.email);
+        $('.controls .nickname').val(data.nickname);
+        $('.controls .age').val(data.age);
+        $('.controls .xinzuo').val(data.xinzuo);
+        $('.controls .motto').val(data.motto);
+        $('.controls .upload').css({
+            background: data.headpic + " center center",
+            backgroundSize: '100%'
+        });
+        $("input:radio[name='sex'][value='" + data.sex + "']").prop("checked", "checked");
+
+        /*  原始粗暴的写法
+
+        if(data.personal.sex =='男'){
+            $('.controls .male').attr(
+                'checked','checked'
+            )
+		}
+		else {
+		    $('.controls .female').attr(
+            'checked','checked'
+        )}*/
+
+        // 退出跳转
+        $('.exit').on("click", function () {
+            if (confirm("您确认要退出闲言吗？") == true) {
+                $(window).attr('location', 'login.html');
+                localStorage.removeItem("data");
+                localStorage.removeItem("pdata");
+            }
+        })
+    });
+</script>
+</body>
+</html>

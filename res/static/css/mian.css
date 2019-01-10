@@ -294,9 +294,24 @@ body {
 
 .lay-blog .container .item-btn {
     text-align: center;
-    margin-top: 20px;
 }
 
+.lay-blog .container .loading {
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 50px;
+    background-color: #FFFFFF;
+    font-size: 16px;
+}
+
+.loading-pic{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url("../../../res/static/images/loading.gif") center center;
+    margin-bottom:-2px;
+}
 @media only screen and (max-width: 750px) {
     .lay-blog .container {
         width: 100%;
@@ -324,7 +339,7 @@ body {
     width: 100%;
     padding: 30px 0;
     line-height: 30px;
-    background:#07A8C5;
+    background: #07A8C5;
     color: #fff;
     color: rgba(255, 255, 255, 0.5);
     font-size: 14px;
@@ -478,7 +493,7 @@ body {
 }
 
 /*个人档*/
-.leftBar .personal-intro{
+.leftBar .personal-intro {
     width: 100%;
     height: 135px;
     background-color: #FFFFFF;
@@ -486,18 +501,19 @@ body {
     color: #242c2d;
 }
 
-.leftBar .personal-intro .intro-head,.leftBar .friendList .intro-head{
+.leftBar .personal-intro .intro-head, .leftBar .friendList .intro-head {
     display: inline-block;
     width: 100%;
     height: 35px;
     line-height: 35px;
-    padding-left:10px;
+    padding-left: 10px;
     font-weight: bold;
     font-size: 16px;
     background-color: #EDF9FD;
     box-sizing: border-box;
 }
-.leftBar .personal-intro .intro-item{
+
+.leftBar .personal-intro .intro-item {
     display: inline-block;
     width: 90%;
     height: 45px;
@@ -505,20 +521,22 @@ body {
     margin-left: 15px;
     border-bottom: 1px solid #d8eaee;
     box-sizing: border-box;
-    color:#242c2d;
+    color: #242c2d;
     font-size: 12px;
 }
-.leftBar .personal-intro  i{
+
+.leftBar .personal-intro i {
     color: #6f8a8e;
     font-size: 14px;
-    font-weight:bold;
+    font-weight: bold;
     margin-right: 2px;
 }
+
 /*个人档结束*/
 
 /*好友列表*/
-.leftBar .friendList{
-    margin-top:10px;
+.leftBar .friendList {
+    margin-top: 10px;
     width: 100%;
     height: auto;
     background-color: #FFFFFF;
@@ -527,48 +545,54 @@ body {
     font-size: 14px;
 }
 
-.leftBar .friendList .friend-items{
+.leftBar .friendList .friend-items {
     height: auto;
     box-sizing: border-box;
     font-size: 16px;
     padding-left: 7px;
     padding-top: 10px;
 }
+
 .leftBar .friendList .friend-items li {
     height: 100px;
-    width:70px;
+    width: 70px;
     float: left;
     font-size: 14px;
-    margin: 0  3px 0 0 ;
+    margin: 0 3px 0 0;
     box-sizing: border-box;
     text-align: center;
-    color:#242c2d;
+    color: #242c2d;
 }
-.leftBar .friendList .friend-items li:hover{
+
+.leftBar .friendList .friend-items li:hover {
     cursor: pointer;
 }
-.leftBar .friendList .friend-items span{
+
+.leftBar .friendList .friend-items span {
     display: inline-block;
 }
-.leftBar .friendList .friend-items .item-head{
+
+.leftBar .friendList .friend-items .item-head {
     width: 100%;
     height: 70px;
-    background:  url("../../../res/layui/images/face/100.jpeg") center center;
+    background: url("../../../res/layui/images/face/100.jpeg") center center;
     background-size: 100%;
 }
+
 /*好友列表结束*/
 
 /*数据统计*/
-.leftBar .data-statics{
+.leftBar .data-statics {
     width: 100%;
     height: 100px;
     margin-bottom: 10px;
     padding: 20px;
     box-sizing: border-box;
-    background-color:#EDF9FD;
+    background-color: #EDF9FD;
     display: flex;
 }
-.leftBar .data-statics .static-item{
+
+.leftBar .data-statics .static-item {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -577,47 +601,52 @@ body {
     cursor: pointer;
 }
 
-.leftBar .data-statics .static-item:nth-child(1){
+.leftBar .data-statics .static-item:nth-child(1) {
     border-right: 1px solid #d8eaee;
 }
 
-.leftBar .data-statics .static-item div{
+.leftBar .data-statics .static-item div {
     font-size: 16px;
 }
-.leftBar .data-statics .static-item span{
+
+.leftBar .data-statics .static-item span {
     font-size: 30px;
 }
+
 /*数据统计结束*/
 
 /*左侧工具栏结束*/
 
-
 /*大背景图片开始*/
-.bg .self-intro{
-    position:absolute;
+.bg .self-intro {
+    position: absolute;
     left: 50px;
     bottom: 0;
     height: 120px;
     padding-bottom: 10px;
     color: #ffffff;
 }
-.bg .self-intro span{
+
+.bg .self-intro span {
     display: inline-block;
 }
-.bg .self-intro .head-pic{
+
+.bg .self-intro .head-pic {
     width: 120px;
     height: 120px;
     box-sizing: border-box;
     border: 4px solid #FFF;
-    background:  url("../../../res/layui/images/face/100.jpeg") center center;
+    background: url("../../../res/layui/images/face/100.jpeg") center center;
     background-size: 100%;
 }
-.nick{
+
+.nick {
     width: 200px;
     position: absolute;
     left: 130px;
     bottom: 5px;
 }
+
 /*大背景图片结束*/
 
 /*首页整体布局*/
@@ -625,23 +654,27 @@ body {
     width: 800px;
     float: left;
 }
+
 .index-container {
     width: 1050px !important;
     overflow: hidden;
 }
+
 /*首页整体布局结束*/
-.bg{
+.bg {
     width: 100%;
     height: 250px;
     background: url("../../../res/layui/images/face/101.jpg") center top;
-    margin-top:80px;
+    margin-top: 80px;
 }
-.bg-wrap{
+
+.bg-wrap {
     width: 1150px;
     height: 100%;
     margin: 0 auto;
-    position:relative;
+    position: relative;
 }
+
 /*顶部退出按钮*/
 .blog-nav .exit {
     color: rgba(255, 255, 255, .7);
@@ -664,10 +697,11 @@ body {
     float: right;
 }
 
-.index-container .item-list{
+.index-container .item-list {
     overflow: hidden;
     margin-bottom: 20px;
 }
+
 .index-container .item-list .btn:hover {
     opacity: 0.8;
 }
@@ -679,51 +713,58 @@ body {
     padding: 10px;
     line-height: 25px;
 }
-.fileUpload{
+
+.fileUpload {
     position: relative;
     display: inline-block;
     overflow: hidden;
     float: right;
     margin-right: 20px;
 }
-.fileUpload input{
-    position:absolute;
+
+.fileUpload input {
+    position: absolute;
     right: 0px;
     top: 0px;
     opacity: 0;
     -ms-filter: 'alpha(opacity=0)';
     font-size: 200px;
 }
-.image-path{
+
+.image-path {
     font-size: 16px;
     display: inline-block;
     height: 38px;
     line-height: 38px;
     float: left;
-    color:rgba(0,0,0,0.9);
+    color: rgba(0, 0, 0, 0.9);
 }
-.suc-upload{
+
+.suc-upload {
     display: none;
     float: left;
-    margin-top:5px;
+    margin-top: 5px;
     margin-right: 10px;
     width: 30px;
     height: 30px;
     border-radius: 15px;
     background: url("../../../res/layui/css/modules/layer/default/icon.png") -30px 0;
 }
+
 /*动态发表及图片上传部分结束*/
 
 /*单条动态的详细信息*/
 
-.publish-details{
+.publish-details {
     overflow: hidden;
     margin-bottom: 10px;
 }
-.publish-details span{
+
+.publish-details span {
     display: inline-block;
 }
-.publish-details .head-nail{
+
+.publish-details .head-nail {
     width: 60px;
     height: 60px;
     border-radius: 30px;
@@ -731,16 +772,19 @@ body {
     background: url("../../../res/layui/images/face/100.jpeg") center center;
     background-size: 100%;
 }
+
 .nickname {
-    color:#403e3b;
+    color: #403e3b;
     font-size: 20px;
-    margin-left:2px;
+    margin-left: 2px;
 }
-.publish-time{
-    color:#99958d;
-    font-size:13px;
+
+.publish-time {
+    color: #99958d;
+    font-size: 13px;
 }
-.nail-right{
+
+.nail-right {
     margin-top: 10px;
     margin-left: 10px;
     float: left;
@@ -749,4 +793,5 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
+
 /*单条动态的详细信息结束*/

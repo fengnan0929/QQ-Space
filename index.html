@@ -172,12 +172,6 @@
                 </div>
             </div>
             <!--一条动态结束-->
-
-            <!--动态尾部'下一页'按钮开始-->
-            <div class="item-btn">
-                <button class="layui-btn layui-btn-normal">下一页</button>
-            </div>
-            <!--动态尾部'下一页'按钮结束-->
         </div>
     </div>
     <!--动态列表结束-->
@@ -245,7 +239,7 @@
     localStorage.setItem("data", JSON.stringify(fakedata));
     localStorage.setItem("pdata", JSON.stringify(fakedata.personal));
 
-    let data =JSON.parse(localStorage.getItem('data'));
+    let data = JSON.parse(localStorage.getItem('data'));
 
     $(function () {
 
@@ -308,7 +302,6 @@
         }
         $(list).insertAfter(".fixed");
 
-
         // 退出跳转
         $('.exit').on("click", function () {
             if (confirm("您确认要退出闲言吗？") == true) {
@@ -316,7 +309,27 @@
                 localStorage.removeItem("data");
                 localStorage.removeItem("pdata");
             }
-        })
+        });
+
+        // 滚动到页面最后
+        let isMore = true; //  判断是否已经加载了所有的朋友圈
+        let flag = true;
+
+        $(window).on('scroll', function () {
+            if ($(window).height() + $(window).scrollTop() + 80 >= $(document).height() && isMore && flag) {
+                // 提示加载中
+                $(".index-wrap").append('<div class="item-btn loading" ><span>加载中... </span><span class="loading-pic"></span></div>');
+                flag = false; //加载中不允许插入加载提示
+
+                let a= setTimeout(function () {
+                    $(".index-wrap").append(list);
+                    $('.item-btn').remove();
+                    flag= true;
+                    clearTimeout(a);
+                },1000);
+            }
+
+        });
     });
 </script>
 </body>

@@ -151,9 +151,10 @@
         });
 
         // 初始化页面内容
-        let content = " ";
-        for(let i=0; i<messages.length; i++){
-            content = content +`<div class="info-box">
+        function updateContent(messages){
+            let content = " ";
+            for(let i=0; i<messages.length; i++){
+                content = content +`<div class="info-box">
                     <div class="info-item">
                         <img class="info-img" src="${messages[i].headpic}" style="width: 70px;height: 70px;" alt="">
                         <div class="info-text">
@@ -165,9 +166,10 @@
                         </div>
                     </div>
                 </div>`
+            }
+            $('#LAY-msg-box').html(content);
         }
-        $('#LAY-msg-box').html(content);
-
+        updateContent(messages);
     })
 </script>
 

@@ -141,8 +141,8 @@
                     </div>
                 </form>
                 <div class="item-list">
-                    <span class="suc-upload" id="suc_upload"></span>
-                    <span class="image-path" id="imagepath"></span>
+                    <span class="suc-upload " id="suc_upload"></span>
+                    <span class="image-path " id="imagepath"></span>
                     <button class="btn" id="submit-btn">发布动态</button>
                     <span class="fileUpload">
                         <input type="file" id="upload" accept="image/jpg, image/png, image/jpeg, image/gif">
@@ -177,6 +177,7 @@
     <!--动态列表结束-->
 </div>
 <!--中部body板块结束-->
+
 <!--尾部开始-->
 <div class="footer">
     <p>
@@ -188,6 +189,25 @@
 </div>
 <!--尾部结束-->
 <script src="res/layui/layui.js"></script>
+<script id="LAY-msg-tpl" type="text/html">
+    <div class="item">
+        <div class="item-box  layer-photos-demo1 layer-photos-demo">
+            <div class="publish-details">
+                <span class="head-nail"></span>
+                <div class="nail-right">
+                    <span class="nickname">{{d.username}}</span>
+                    <span class="publish-time">发布于：{{d.time}}</span>
+                </div>
+            </div>
+            <p>{{d.content}}</p>
+            <img {{d.pic}} alt="" {{d.style}}>
+        </div>
+        <div class="comment count">
+            <a href="details.html#comment">评论</a>
+            <a href="javascript:;" class="like">点赞</a>
+        </div>
+    </div>
+</script>
 <script>
     layui.config({
         base: 'res/static/js/'
@@ -242,17 +262,6 @@
     let data = JSON.parse(localStorage.getItem('data'));
 
     $(function () {
-
-        // 上传图片
-        $('#upload').change(function () {
-            // 获取读到的上传文件
-            let a = document.getElementById('upload').files[0];
-            $('#imagepath').text(a.name);
-            // 将成功上传图标改为显示状态
-            $('#suc_upload').css({
-                display: 'block'
-            })
-        });
 
         // 初始化用户信息
         $('.head-pic').css({
@@ -321,12 +330,12 @@
                 $(".index-wrap").append('<div class="item-btn loading" ><span>加载中... </span><span class="loading-pic"></span></div>');
                 flag = false; //加载中不允许插入加载提示
 
-                let a= setTimeout(function () {
+                let a = setTimeout(function () {
                     $(".index-wrap").append(list);
                     $('.item-btn').remove();
-                    flag= true;
+                    flag = true;
                     clearTimeout(a);
-                },1000);
+                }, 1000);
             }
 
         });

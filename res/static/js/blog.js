@@ -26,21 +26,17 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
             }
         }
     });
-
-    // end 分頁
+    // end 分页
 
 
     // start 导航显示隐藏
-
     $("#mobile-nav").on('click', function () {
         $("#pop-nav").toggle();
     });
-
     // end 导航显示隐藏
 
 
     //start 评论的特效
-
     (function ($) {
         $.extend({
             tipsBox: function (options) {
@@ -128,7 +124,8 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
     });
     //end 评论的特效
 
-    //end 提交
+
+    // 留言提交按钮
     $('#item-btn').on('click', function () {
         var elemCont = $('#LAY-msg-content'), content = elemCont.val();
 
@@ -186,16 +183,107 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
         }
     });
 
-    // start  图片遮罩
-    var layerphotos = document.getElementsByClassName('layer-photos-demo');
-    for (var i = 1; i <= layerphotos.length; i++) {
-        layer.photos({
-            photos: ".layer-photos-demo" + i + ""
-            , anim: 0
-        });
-    }
-    // end 图片遮罩
+    // 上传图片
+    let a,pic,style;
+    $('#upload').on('change',function () {
+        // 获取读到的上传文件
+        a = document.getElementById('upload').files[0];
+        if(a){
+            $('#imagepath').text(a.name);
+            // 将成功上传图标改为显示状态
+            $('#suc_upload').css({
+                display: 'block'
+            });
+            var reader = new FileReader();
+            reader.readAsDataURL(a);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+                if(e.target.result){
+                    pic = 'src =' +e.target.result;
+                    style = `style = display:block; width:60%; margin-top:10px"`
+                }
+            };
+        }
+        $('#upload').val('');
+    });
 
+    // 发表动态提交按钮
+    $('#submit-btn').on('click',function () {
+        var content = $('#LAY-msg-content').val();
+        if (content.replace(/\s/g, '') == "") {
+            layer.msg('请先输入动态内容');
+            return  $('#LAY-msg-content').focus();
+        }
+
+        //转换只有一位数的日期时间等
+        function parse(month) {
+            if(month<10){
+                month ='0'+month;
+            }
+            else {
+                month +="";
+            }
+            return month;
+        }
+
+        // 获取当前的时间 参数为时间戳
+        function getTime(timestamp) {
+
+            var now = Date.parse(new Date()); //获取当前的时间戳
+            var res;
+            if(now - timestamp <60000){
+                res = (now - timestamp)/1000 +"秒前";
+            }
+            else if(now - timestamp <3600000){
+                res = parseInt((now - timestamp)/60000) +"分钟前";
+            }
+            else if((now - timestamp < 3600000*24)){
+                res =  parseInt((now - timestamp) /3600000) +'小时前';
+            }
+            else {
+                var time =new Date(timestamp);
+                res = time.getFullYear()+'-'+ parse((time.getMonth()+1)) +"-"+ parse(time.getDate()) + " " +time.getHours()+":"+time.getMinutes();
+            }
+            return res;
+        }
+
+        if(!a){
+            pic = '';
+            style = `style ="display:none"`
+        }
+        var view = $('#LAY-msg-tpl').html(),
+            d = JSON.parse(localStorage.getItem('pdata')),   // d是模拟从 localstorage 获取的数据
+            data = {
+                username: d.nickname,
+                avatar: d.headpic.substring(d.headpic.indexOf('(') + 1, d.headpic.indexOf(")")),
+                praise: 0,
+                content: content,
+                time:'刚刚', // getTime(时间戳)
+                pic:pic,
+                style:style
+            };
+
+        // 清除本次上传的内容和提示内容
+        function clear(){
+            a = null;
+            pic = null;
+            $('#suc_upload').css({
+                display: 'none'
+            });
+            $('.image-path').text('');
+        }
+        clear();
+
+        //模板渲染
+        laytpl(view).render(data, function (html) {
+            $(html).insertAfter(".fixed");
+            $('#LAY-msg-content').val('');
+            layer.msg('动态发布成功', {
+                icon: 1
+            })
+        });
+
+    });
 
     //输出test接口
     exports('blog', {});

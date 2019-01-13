@@ -27,9 +27,6 @@
     padding-left: 10px;
     font-size:14px;
 }
-.controls input[type='email']{
-    margin-bottom: 20px;
-}
 .controls textarea{
     width:400px;
     height: 60px;
@@ -44,13 +41,21 @@
 }
 
 .controls .sub-button{
+    display: inline-block;
     width: 100px;
     height: 40px;
+    line-height: 40px;
+    text-align: center;
     border-radius: 5px;
     font-size:16px;
     background-color: #07A8C5;
     color: #FFFFFF;
+    margin-bottom: 20px;
 }
 .controls .sub-button:hover{
     opacity: 0.8;
+}
+
+.help-block{
+    color: #8e8c8d;
 }

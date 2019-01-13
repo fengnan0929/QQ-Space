@@ -23,46 +23,47 @@
                     <div id="legend" class="log-head">
                         <legend class="">个人资料</legend>
                     </div>
+                    <!-- Appended input-->
                     <div class="control-group">
-                        <!-- Appended input-->
                         <label class="control-label">邮箱</label>
                         <div class="controls">
                             <div class="input-append">
-                                <input class="span2" placeholder="请输入邮箱地址" type="email">
+                                <input class="span2 email" placeholder="请输入邮箱地址" type="email">
                             </div>
-                            <p class="help-block"></p>
+                            <p class="help-block">邮箱的正确格式为 x@y.z</p>
                         </div>
-
-                        <!-- Text input-->
-                        <div class="control-group">
-                            <label class="control-label">密码</label>
-                            <div class="controls">
-                                <input type="password" placeholder="请设置您的密码" class="input-xlarge">
-                                <p class="help-block"></p>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">确认密码</label>
-                            <div class="controls">
-                                <input type="password" placeholder="请再次输入您设置的密码" class="input-xlarge">
-                                <p class="help-block"></p>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <label class="control-label">昵称</label>
+                    </div>
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label">密码</label>
                         <div class="controls">
-                            <input type="text" placeholder="请输入您的昵称" class="input-xlarge">
-                            <p class="help-block"></p>
+                            <input type="password" placeholder="请设置您的密码" class="input-xlarge pwd1">
+                            <p class="help-block">密码由6至16位大小写字母或数字组成</p>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">性别</label>
+                        <label class="control-label">确认密码</label>
                         <div class="controls">
-                            <!-- Inline Radios -->
+                            <input type="password" placeholder="请再次输入您设置的密码" class="input-xlarge pwd2">
+                            <p class="help-block">确认您的密码同上一次一致</p>
+                        </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label">昵称</label>
+                        <div class="controls">
+                            <input type="text" placeholder="请输入您的昵称" class="input-xlarge nickname">
+                            <p class="help-block">用户名由1-8位不含空格的字符组成</p>
+                        </div>
+                    </div>
+
+                    <!-- Inline Radios -->
+                    <div class="control-group ">
+                        <label class="control-label">性别</label>
+                        <div class="controls sex">
                             <label class="radio inline">
-                                <input type="radio" value="男" name="sex" checked="checked">
+                                <input type="radio" value="男" name="sex">
                                 男
                             </label>
                             <label class="radio inline">
@@ -71,22 +72,22 @@
                             </label>
                         </div>
                     </div>
-                    <div class="control-group">
 
-                        <!-- Text input-->
+                    <!-- Text input-->
+                    <div class="control-group">
                         <label class="control-label">年龄</label>
                         <div class="controls">
-                            <input type="number" placeholder="请输入您的年龄" class="input-xlarge">
-                            <p class="help-block"></p>
+                            <input type="number" placeholder="请输入您的年龄" class="input-xlarge age">
+                            <p class="help-block">年龄的输入范围在1-120</p>
                         </div>
                     </div>
+
+                    <!-- Select Basic -->
                     <div class="control-group">
-
-
-                        <!-- Select Basic -->
                         <label class="control-label">星座</label>
                         <div class="controls">
-                            <select class="input-xlarge">
+                            <select class="input-xlarge xinzuo">
+                                <option>请选择星座</option>
                                 <option>白羊座</option>
                                 <option>金牛座</option>
                                 <option>双子座</option>
@@ -102,28 +103,23 @@
                         </div>
                     </div>
 
-
-
+                    <!-- Textarea -->
                     <div class="control-group">
-
-                        <!-- Textarea -->
                         <label class="control-label">个性签名</label>
-                        <div class="controls">
-                             <div class="textarea">
-                                <textarea type="" class="" > </textarea>
+                        <div class="controls ">
+                            <div class="textarea">
+                                <textarea type="" class="motto"> </textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="control-group">
+                    <!-- Button -->
+                    <div>
                         <label class="control-label"></label>
-
-                        <!-- Button -->
                         <div class="controls">
-                            <button class="sub-button">注册</button>
+                            <span class="sub-button">注册</span>
                         </div>
                     </div>
-
                 </fieldset>
             </form>
         </div>
@@ -142,6 +138,150 @@
     layui.config({
         base: 'res/static/js/'
     }).use('blog');
+</script>
+<script src="res/jquery/jquery-1.12.4.js"></script>
+<script>
+    //邮箱的验证
+    let email;
+    let $email= $('.email');
+    $email.focus(); //进入填写页面，焦点落在第一行
+    $email.change(function () {
+        email = $email.val();
+    });
+    $email.on('blur', function () {
+        let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        if (reg.test(email)) {
+            console.log("邮箱格式正确");
+            $email.parents('.control-group').attr('class','success control-group');
+        } else {
+            console.log("邮箱格式不正确");
+            $email.val('');
+            $email.parents('.control-group').attr('class','error control-group');
+        }
+    });
+
+    //密码的验证
+    let $pwd1 = $('.pwd1'), $pwd2 = $('.pwd2');
+    let pwd1=$pwd1.val(), pwd2 = $pwd2.val();
+    $pwd1.change(function () {
+        pwd1 = $pwd1.val();
+    });
+    $pwd2.change(function () {
+        pwd2 = $pwd2.val();
+    });
+    $pwd1.on('blur', function () {
+        let reg = /^[\w]{6,16}$/;
+        if (reg.test(pwd1)) {
+            console.log('密码1格式正确');
+            $pwd1.parents('.control-group').attr('class','success control-group');
+        }
+        else {
+            console.log('密码1格式不正确');
+            $pwd1.val('');
+            $pwd1.parents('.control-group').attr('class','error control-group');
+        }
+    });
+    $pwd2.on('blur', function () {
+        let reg = /^[\w]{6,16}$/;
+        if (!reg.test(pwd2)) {
+            console.log('密码2格式不正确');
+            $pwd2.val('');
+            $pwd2.parents('.control-group').attr('class','error control-group')
+        }
+        else if(pwd1 !== pwd2) {
+            console.log("第二次输入的密码和第一次不一致");
+            $pwd1.val('');
+            $pwd2.val('');
+            $pwd2.parents('.control-group').attr('class','error control-group');
+            $pwd1.parents('.control-group').attr('class','error control-group')
+        }
+        else{
+            $pwd2.parents('.control-group').attr('class','success control-group');
+        }
+    });
+
+    //用户名的验证
+    let nickname;
+    let $nickname = $('.nickname');
+    $nickname.change(function () {
+        nickname = $.trim($nickname.val());
+    });
+    $nickname.on('blur', function () {
+        if (!nickname || nickname.length > 8) {
+            console.log('昵称格式错误');
+            $nickname.val('');
+            $nickname.parents('.control-group').attr('class','error control-group');
+        }
+        else{
+            $nickname.parents('.control-group').attr('class','success control-group');
+        }
+    });
+
+    //年龄的验证
+    let age;
+    let $age = $('.age');
+    $age.change(function () {
+        age = $age.val();
+    });
+    $age.on('blur',function () {
+        let reg= /^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
+        if(!reg.test(age)){
+            $age.parents('.control-group').attr('class','error control-group');
+            $age.val('');
+
+        }
+        else{
+            $age.parents('.control-group').attr('class','success control-group');
+        }
+    });
+
+    //星座的选取
+    let $xinzuo = $('.xinzuo');
+    let xinzuo = $xinzuo.val();
+    /*if(xinzuo =='请选择星座'){
+        $xinzuo.parents('.control-group').attr('class','error control-group');
+    }*/
+    $xinzuo.change(function () {
+        xinzuo = $xinzuo.val();
+    });
+    $xinzuo.on('blur',function () {
+        if(xinzuo!=='请选择星座'){
+            $xinzuo.parents('.control-group').attr('class','success control-group');
+        }
+        else if(xinzuo =='请选择星座'){
+            $xinzuo.parents('.control-group').attr('class','error control-group');
+        }
+    });
+
+    //个性签名设置
+    let $motto = $('.motto');
+    let motto;
+    $motto.change(function () {
+        motto = $motto.val;
+    });
+    $motto.on('blur',function () {
+        $motto.parents('.control-group').attr('class','success control-group');
+    });
+
+    //性别的选取
+    let sex = $("input:radio[name='sex'][checked='checked']").attr('value');
+    $("input:radio[name='sex']").on('click',function () {
+        $(this).attr('checked','checked');
+        $(this).parent().siblings().children('input').removeAttr('checked');
+        let $sex= $("input:radio[name='sex'][checked='checked']");
+        sex= $sex.attr('value');
+        $sex.parents('.control-group').attr('class','success control-group');
+        console.log(sex);
+    });
+
+    $('.sub-button').on('click',function () {
+        if($('.success').length < 8 ){
+            alert('抱歉，还有内容没有填写通过！')
+        }
+        else{
+            //$.post();
+        }
+    });
 </script>
 </body>
 </html>

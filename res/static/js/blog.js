@@ -200,7 +200,7 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
             reader.onloadend = function (e) {
                 if(e.target.result){
                     pic = 'src =' +e.target.result;
-                    style = `style = display:block; width:60%; margin-top:10px"`
+                    style = `style ="display:block;width:60%;margin-top:10px"`;
                 }
             };
         }

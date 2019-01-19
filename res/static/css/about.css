@@ -63,3 +63,44 @@ input[disabled],input:disabled,input.disabled{
     -webkit-opacity:1;
     opacity: 1;
 }
+
+.big-mask{
+    width: 100%;
+    height: 99%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.2);
+}
+.big-mask .box{
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+}
+
+.big-mask .box .show{
+    width:900px;
+    height:500px ;
+    margin: 150px auto;
+    position: relative;
+}
+
+.big-mask .box .ok-btn{
+    position: absolute;
+    bottom: -60px;
+    right: 0;
+    width: 100px;
+    height: 40px;
+}
+.img-preview{
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+#photo {
+    max-width: 100%;
+}

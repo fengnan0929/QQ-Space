@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>注册-闲言轻博客</title>
+    <title>登录-闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
@@ -21,12 +21,13 @@
     <div class="log-wrap" >
         <div class="log-center">
             <div  class="log-head"><span></span>闲言<span></span></div>
-            <form class="log-form" method="post">
-                <input type="text" placeholder="使用邮箱登录" name="username" value="">
-                <input type="password" name="pwd" value=""  placeholder="密码">
-                <input type="submit" class="log-button" value="登录">
+            <form class="log-form">
+                <input type="text" placeholder="使用邮箱登录" name="username" value="" id="account">
+                <input type="password" name="pwd" value=""  placeholder="密码" id="pwd">
+                <span  class="log-button">登录</span>
             </form>
             <div class="register-href">
+                <span class="tips">您输入的账户不正确</span>
                 <a href="register.html" style="float: right">点我注册</a> <span
                     style="float: right">没有帐号？</span>
             </div>
@@ -40,11 +41,109 @@
         <span>S403</span>
     </p>
 </div>
+
+<script src="res/jquery/jquery-1.12.4.js"></script>
 <script src="res/layui/layui.js"></script>
 <script>
     layui.config({
         base: 'res/static/js/'
     }).use('blog');
+</script>
+<script>
+    $(function () {
+        // 获取email账号
+        let $account =  $('#account');
+        let tips =$('.tips');
+        $account.focus();
+        let account = $account.val();
+        $account.on('change',function () {
+            account = $account.val();
+        });
+        $account.on('blur',function () {
+            let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+            if (reg.test(account)) { // 账号符合格式要求
+                $.ajax({
+                    url:'http://192.168.1.105:8080/user/validemail',
+                    type: 'post',
+                    data: account,
+                    success:function (data) { // 账号是否注册过
+                        if(data){
+                            tips.css('opacity','1');
+                            tips.text('您输入的账号未注册');
+                            $account.val('');
+                            $account.focus();
+                            account ='';
+                            let timer1= setTimeout(function () {
+                                tips.css('opacity','0');
+                                clearTimeout(timer1);
+                            },3000);
+                        }
+                    },
+                    contentType: "application/json",
+                });
+            } else if(account.length>0){  // 输入了账号但不符合格式要求
+                tips.css('opacity','1');
+                tips.text('您输入的账号格式错误');
+                $account.val('');
+                $account.focus();
+                account ='';
+                let timer= setTimeout(function () {
+                    tips.css('opacity','0');
+                    clearTimeout(timer);
+                },3000);
+            }
+        });
+        // 获取密码
+        let $pwd =  $('#pwd');
+        let pwd =$pwd.val();
+        $pwd.on('change',function () {
+            pwd = $pwd.val();
+        });
+        // 登录提交
+        $('.log-button').on('click',function () {
+            let data = {
+                'email':account,
+                'password':pwd
+            };
+            $.ajax({
+                url:'http://192.168.1.105:8080/user/login',
+                xhrFields:{
+                    withCredentials:true
+                },
+                type:'post',
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (data) {
+                    // 密码正确，把数据存在local storage
+                    if(data !=='incorrect password'){
+                        localStorage.setItem("UserAccount", JSON.stringify(data));
+                        window.location.href = 'index.html';
+                    }
+                    // 密码错误
+                    else{
+                        tips.css('opacity','1');
+                        tips.text('您输入的密码错误！');
+                        $pwd.val('');
+                        $pwd.focus();
+                        let timer1= setTimeout(function () {
+                            tips.css('opacity','0');
+                            clearTimeout(timer1);
+                        },3000);
+                    }
+                },
+                error:function(){
+                    tips.css('opacity','1');
+                    tips.text('哦豁，服务器好像罢工了');
+                    $pwd.val('');
+                    $pwd.focus();
+                    let timer1= setTimeout(function () {
+                        tips.css('opacity','0');
+                        clearTimeout(timer1);
+                    },3000);
+                },
+            })
+        });
+    });
 </script>
 </body>
 </html>

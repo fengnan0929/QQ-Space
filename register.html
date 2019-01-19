@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>注册-闲言轻博客</title>
+    <title>注册-闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
@@ -12,7 +12,6 @@
 <body class="lay-blog">
 <div class="bg">
     <div class="bg-wrap">
-
     </div>
 </div>
 <div class="container-wrap">
@@ -23,7 +22,6 @@
                     <div id="legend" class="log-head">
                         <legend class="">个人资料</legend>
                     </div>
-                    <!-- Appended input-->
                     <div class="control-group">
                         <label class="control-label">邮箱</label>
                         <div class="controls">
@@ -33,7 +31,6 @@
                             <p class="help-block">邮箱的正确格式为 x@y.z</p>
                         </div>
                     </div>
-                    <!-- Text input-->
                     <div class="control-group">
                         <label class="control-label">密码</label>
                         <div class="controls">
@@ -41,7 +38,6 @@
                             <p class="help-block">密码由6至16位大小写字母或数字组成</p>
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label">确认密码</label>
                         <div class="controls">
@@ -49,7 +45,6 @@
                             <p class="help-block">确认您的密码同上一次一致</p>
                         </div>
                     </div>
-                    <!-- Text input-->
                     <div class="control-group">
                         <label class="control-label">昵称</label>
                         <div class="controls">
@@ -57,8 +52,6 @@
                             <p class="help-block">用户名由1-8位不含空格的字符组成</p>
                         </div>
                     </div>
-
-                    <!-- Inline Radios -->
                     <div class="control-group ">
                         <label class="control-label">性别</label>
                         <div class="controls sex">
@@ -72,8 +65,6 @@
                             </label>
                         </div>
                     </div>
-
-                    <!-- Text input-->
                     <div class="control-group">
                         <label class="control-label">年龄</label>
                         <div class="controls">
@@ -81,8 +72,6 @@
                             <p class="help-block">年龄的输入范围在1-120</p>
                         </div>
                     </div>
-
-                    <!-- Select Basic -->
                     <div class="control-group">
                         <label class="control-label">星座</label>
                         <div class="controls">
@@ -102,8 +91,6 @@
                             </select>
                         </div>
                     </div>
-
-                    <!-- Textarea -->
                     <div class="control-group">
                         <label class="control-label">个性签名</label>
                         <div class="controls ">
@@ -112,8 +99,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Button -->
                     <div>
                         <label class="control-label"></label>
                         <div class="controls">
@@ -127,12 +112,13 @@
 </div>
 <div class="footer">
     <p>
-        <span>&copy; 2018</span>
+        <span>&copy; 2019</span>
         <span><a href="http://www.layui.com" target="_blank">浙江大学软件学院</a></span>
         <span>S403</span>
     </p>
     <p><span>人生就是一场修行，祝君猪事顺利</span></p>
 </div>
+
 <script src="res/layui/layui.js"></script>
 <script>
     layui.config({
@@ -144,17 +130,32 @@
     //邮箱的验证
     let email;
     let $email= $('.email');
-    $email.focus(); //进入填写页面，焦点落在第一行
+    //进入填写页面，焦点落在第一行
+    $email.focus();
     $email.change(function () {
         email = $email.val();
     });
     $email.on('blur', function () {
         let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
         if (reg.test(email)) {
-            console.log("邮箱格式正确");
-            $email.parents('.control-group').attr('class','success control-group');
+            $.ajax({
+                url:'http://192.168.1.106:8080/user/validemail',
+                type: 'post',
+                data:email,
+                success:function (data) {
+                    if(!data){
+                        alert("您注册的邮箱地址已经被使用!");
+                        $email.parents('.control-group').attr('class','error control-group');
+                        $email.val('');
+                        email ='';
+                    }
+                    else {
+                        $email.parents('.control-group').attr('class','success control-group');
+                    }
+                },
+                contentType: "application/json",
+            });
         } else {
-            console.log("邮箱格式不正确");
             $email.val('');
             $email.parents('.control-group').attr('class','error control-group');
         }
@@ -172,11 +173,9 @@
     $pwd1.on('blur', function () {
         let reg = /^[\w]{6,16}$/;
         if (reg.test(pwd1)) {
-            console.log('密码1格式正确');
             $pwd1.parents('.control-group').attr('class','success control-group');
         }
         else {
-            console.log('密码1格式不正确');
             $pwd1.val('');
             $pwd1.parents('.control-group').attr('class','error control-group');
         }
@@ -184,12 +183,10 @@
     $pwd2.on('blur', function () {
         let reg = /^[\w]{6,16}$/;
         if (!reg.test(pwd2)) {
-            console.log('密码2格式不正确');
             $pwd2.val('');
             $pwd2.parents('.control-group').attr('class','error control-group')
         }
         else if(pwd1 !== pwd2) {
-            console.log("第二次输入的密码和第一次不一致");
             $pwd1.val('');
             $pwd2.val('');
             $pwd2.parents('.control-group').attr('class','error control-group');
@@ -208,7 +205,6 @@
     });
     $nickname.on('blur', function () {
         if (!nickname || nickname.length > 8) {
-            console.log('昵称格式错误');
             $nickname.val('');
             $nickname.parents('.control-group').attr('class','error control-group');
         }
@@ -228,7 +224,6 @@
         if(!reg.test(age)){
             $age.parents('.control-group').attr('class','error control-group');
             $age.val('');
-
         }
         else{
             $age.parents('.control-group').attr('class','success control-group');
@@ -257,7 +252,7 @@
     let $motto = $('.motto');
     let motto;
     $motto.change(function () {
-        motto = $motto.val;
+        motto = $motto.val();
     });
     $motto.on('blur',function () {
         $motto.parents('.control-group').attr('class','success control-group');
@@ -271,15 +266,39 @@
         let $sex= $("input:radio[name='sex'][checked='checked']");
         sex= $sex.attr('value');
         $sex.parents('.control-group').attr('class','success control-group');
-        console.log(sex);
     });
 
     $('.sub-button').on('click',function () {
+        // 表单内全部input添加success类才能填写通过
         if($('.success').length < 8 ){
             alert('抱歉，还有内容没有填写通过！')
         }
         else{
-            //$.post();
+            let userInfo= {
+                email:email,
+                password:pwd1,
+                nickname:nickname,
+                motto:motto,
+                sex:sex,
+                age:age,
+                xinzuo:xinzuo
+            };
+            $.ajax({
+                url:'http://192.168.1.106:8080/user/register',
+                type:'post',
+                data:JSON.stringify(userInfo),
+                success: function(state){
+                    if( state == 'success'){
+                        if(confirm('注册成功，是否跳转到登录界面？')){
+                            window.location.href = 'login.html';
+                        }
+                    }
+                    else {
+                        alert('failed register')
+                    }
+                },
+                contentType: "application/json",
+            });
         }
     });
 </script>

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>闲言轻博客</title>
+    <title>主页-闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
+
 </head>
 <body class="lay-blog">
-<!--头部开始-->
 <div class="header">
     <div class="header-wrap">
         <h1 class="logo pull-left">
@@ -48,9 +48,6 @@
         <li><a href="about.html">关于</a></li>
     </ul>
 </div>
-<!--头部结束-->
-
-<!--大背景图片-->
 <div class="bg">
     <div class="bg-wrap">
         <div class="self-intro">
@@ -59,15 +56,10 @@
         </div>
     </div>
 </div>
-<!--大背景图片结束-->
-
-<!--中部body板块-->
 <div class="container-wrap indexTop">
     <!--屏幕正中动态列表-->
     <div class="index-container container">
-        <!--左边工具栏-->
         <div class="leftBar">
-            <!--数据统计-->
             <div class="data-statics">
                 <div class="static-item">
                     <span>249</span>
@@ -78,16 +70,11 @@
                     <div>留言</div>
                 </div>
             </div>
-            <!--数据统计结束-->
-
-            <!--个人介绍-->
             <div class="personal-intro">
                 <span class="intro-head">个人档</span>
                 <span class="intro-item"><i class="layui-icon layui-icon-component"></i>我是哐哐哐，今年三岁了</span>
                 <span class="intro-item"><i class="layui-icon layui-icon-nan"></i>女 23岁 天蝎座</span>
             </div>
-            <!--个人介绍结束-->
-            <!--好友列表-->
             <div class="friendList">
                 <span class="intro-head">我的好友</span>
                 <ul class="friend-items">
@@ -129,11 +116,8 @@
                     </li>
                 </ul>
             </div>
-            <!--好友列表结束-->
         </div>
-        <!--左边工具栏结束-->
         <div class="contar-wrap index-wrap">
-            <!--动态发布栏-->
             <div class="contar-wrap fixed">
                 <form class="layui-form" action="">
                     <div class="layui-form-item layui-form-text">
@@ -150,50 +134,25 @@
                     </span>
                 </div>
             </div>
-            <!--动态发布栏结束-->
-
-            <!--单独每一条动态放在item内-->
-            <div class="item">
-                <div class="item-box  layer-photos-demo1 layer-photos-demo">
-                    <div class="publish-details">
-                        <span class="head-nail"></span>
-                        <div class="nail-right">
-                            <span class="nickname">nickname</span>
-                            <span class="publish-time">发布于：刚刚</span>
-                        </div>
-                    </div>
-                    <p>
-                        父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山人海去看更广阔的天空，那个时候期望自己有一双翅膀，能够像鸟儿一样飞得高，看得远。虽然父亲有时会和自己开玩笑，但在做错事的时候会受到严厉的训斥。父亲有双粗糙的大手掌，手把手教我走路、骑车，却会在该放手的时刻果断地放开让自己去大胆尝试，那个时候期望快快长大，能够做自己想做的事，不用受父亲的“控制”。父亲是智慧树，他无所不知、无所不晓，虽然你有十万个为什么，但是也难不倒他。</p>
-                    <img src="res/static/images/item.png" alt="">
-                </div>
-                <div class="comment count">
-                    <a href="details.html#comment">评论</a>
-                    <a href="javascript:;" class="like">点赞</a>
-                </div>
-            </div>
-            <!--一条动态结束-->
         </div>
     </div>
-    <!--动态列表结束-->
 </div>
-<!--中部body板块结束-->
-
-<!--尾部开始-->
 <div class="footer">
     <p>
-        <span>&copy; 2018</span>
+        <span>&copy; 2019</span>
         <span><a href="http://www.layui.com" target="_blank">浙江大学软件学院</a></span>
         <span>S403</span>
     </p>
     <p><span>人生就是一场修行，祝君猪事顺利</span></p>
 </div>
-<!--尾部结束-->
-<script src="res/layui/layui.js"></script>
+
+<script src="res/jquery/Myfunc.js"></script>
+<!--新动态模版-->
 <script id="LAY-msg-tpl" type="text/html">
     <div class="item">
         <div class="item-box  layer-photos-demo1 layer-photos-demo">
             <div class="publish-details">
-                <span class="head-nail"></span>
+                <span class="head-nail"  {{d.avatar}}></span>
                 <div class="nail-right">
                     <span class="nickname">{{d.username}}</span>
                     <span class="publish-time">发布于：{{d.time}}</span>
@@ -208,6 +167,7 @@
         </div>
     </div>
 </script>
+<script src="res/layui/layui.js"></script>
 <script>
     layui.config({
         base: 'res/static/js/'
@@ -215,129 +175,90 @@
 </script>
 <script src="res/jquery/jquery-1.12.4.js"></script>
 <script>
-    let fakedata = {
-        'personal': {
-            nickname: '哐哐哐',
-            headpic: 'url("res/layui/images/face/100.jpeg")',
-            motto: '我是alone鸭，今年三岁了',
-            sex: "女",
-            age: '3',
-            xinzuo: '天蝎座',
-            email: '233@qq.com'
-        },
-        'static': {dongtai: '248', liuyan: '129'},
-        'dongtailist': [{
-            nickname: "哐哐哐",
-            headpic: "url('res/layui/images/face/100.jpeg')",
-            text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。",
-            time: "2019-01-03  12:50",
-            like: "",
-            pic: "src='res/static/images/item.png'"
-        }, {
-            nickname: "哐哐哐",
-            headpic: "url('res/layui/images/face/100.jpeg')",
-            text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。",
-            time: "2019-01-03  12:50",
-            like: "",
-            pic: "src='res/static/images/item.png'"
-        }, {
-            nickname: "哐哐哐",
-            headpic: "url('res/layui/images/face/100.jpeg')",
-            text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。",
-            time: "2019-01-03  12:50",
-            like: "",
-            pic: "src='res/static/images/item.png'"
-        }],
-        'haoyoulist': [
-            {nickname: '王玲', headpic: "url('res/layui/images/face/100.jpeg')"},
-            {nickname: 'alone鸭', headpic: "url('res/layui/images/face/2.gif')"},
-            {nickname: '王二', headpic: "url('res/layui/images/face/3.gif')"}
-        ]
-    };
-
-    // 把个人信息存在 local storage;
-    localStorage.setItem("data", JSON.stringify(fakedata));
-    localStorage.setItem("pdata", JSON.stringify(fakedata.personal));
-
-    let data = JSON.parse(localStorage.getItem('data'));
-
     $(function () {
+        // 获取当前用户的个人信息以及好友动态
+        let userAccount = JSON.parse(localStorage.getItem('UserAccount'));
+        $.ajax({
+            url:'http://192.168.1.105:8080/look/homepage',
+            type:'post',
+            contentType:'application/json',
+            xhrFields:{
+                withCredentials:true
+            },
+            data:JSON.stringify({'owner':userAccount}),
+            success:function (data) {
+                console.log(data);
+                // 初始化用户信息
+                $('.head-pic').css({
+                    background:`url("${data.personal.headpic}") center center`,
+                    backgroundSize: "100%"
+                });
+                $('.nick').text(data.personal.nickname);
+                $('.intro-item').eq(0).html('<i class="layui-icon layui-icon-component"></i>&nbsp;' + data.personal.motto);
+                $('.intro-item').eq(1).html('<i class="layui-icon layui-icon-nan"></i>&nbsp;' + data.personal.sex + " " + data.personal.age + '岁 ' + data.personal.xinzuo);
 
-        // 初始化用户信息
-        $('.head-pic').css({
-            background: data.personal.headpic + ' center center',
-            backgroundSize: "100%"
-        });
-        $('.nick').text(data.personal.nickname);
-        $('.intro-item').eq(0).html('<i class="layui-icon layui-icon-component"></i>' + data.personal.motto);
-        $('.intro-item').eq(1).html('<i class="layui-icon layui-icon-nan"></i>' + data.personal.sex + " " + data.personal.age + '岁 ' + data.personal.xinzuo);
+                // 初始化首页统计信息
+                $('.static-item').eq(0).children('span').text(data.statics.dongtai);
+                $('.static-item').eq(1).children('span').text(data.statics.liuyan);
 
-        // 初始化首页统计信息
-        $('.static-item').eq(0).children('span').text(data.static.dongtai);
-        $('.static-item').eq(1).children('span').text(data.static.liuyan);
-
-        // 初始化好友列表
-        let content = '';
-        for (let i = 0; i < data.haoyoulist.length; i++) {
-            content = content + `<li >
-                                        <span class="item-head" style="background:${data.haoyoulist[i].headpic} center center;background-size: 100%"></span>
-                                        <span>${data.haoyoulist[i].nickname}</span>
+                // 初始化好友列表
+                let content = '';
+                for (let i = 0; i < data.friends.length; i++) {
+                    content = content + `<li >
+                                        <span class="item-head" style="background:url('${data.friends[i].headpic}') center center;background-size: 100%"></span>
+                                        <span>${data.friends[i].nickname}</span>
+                                        <span class="friendEmail" style="display: none" >${data.friends[i].email}</span>
                                   </li>`
-        }
-        $('.friend-items').html(content);
+                }
+                $('.friend-items').html(content);
+                //展示好友动态
+                $(showMoment(data.dongtailist)).insertAfter(".fixed");
+            }
+        });
 
-        // 初始化好友动态
-        let list = "";
-        for (let i = 0; i < data.dongtailist.length; i++) {
-            list = list + `
-            <div class="item">
-                <div class="item-box  layer-photos-demo1 layer-photos-demo">
-                    <div class="publish-details">
-                        <span class="head-nail" style="background: ${data.dongtailist[i].headpic} center center;background-size: 100%"></span>
-                        <div class="nail-right">
-                            <span class="nickname">${data.dongtailist[i].nickname}</span>
-                            <span class="publish-time">发布于：${data.dongtailist[i].time}</span>
-                        </div>
-                    </div>
-                    <p>${data.dongtailist[i].text}</p>
-                    <img ${data.dongtailist[i].pic} alt="" style="margin-top: 10px">
-                </div>
-                <div class="comment count">
-                    <a href="details.html#comment">评论</a>
-                    <a href="javascript:;" class="like">点赞</a>
-                </div>
-            </div>
-            `
-        }
-        $(list).insertAfter(".fixed");
+        $('.friend-items').delegate('li','click',function () {
+            let friend = $(this).children('.friendEmail').text();
+            console.log(friend);
+            /*localStorage.setItem("UserAccount", JSON.stringify(friend));
+            var newWeb=window.open('_blank');
+            newWeb.location='index.html';*/
+        });
 
         // 退出跳转
         $('.exit').on("click", function () {
             if (confirm("您确认要退出闲言吗？") == true) {
                 $(window).attr('location', 'login.html');
-                localStorage.removeItem("data");
-                localStorage.removeItem("pdata");
+                // 清除当前用户的cookies和账户
+                localStorage.removeItem('UserAccount');
             }
         });
 
-        // 滚动到页面最后
-        let isMore = true; //  判断是否已经加载了所有的朋友圈
-        let flag = true;
-
+        // 动态列表懒加载
+        let flag = true;  //是否在加载过程中
         $(window).on('scroll', function () {
-            if ($(window).height() + $(window).scrollTop() + 80 >= $(document).height() && isMore && flag) {
+            if ($(window).height() + $(window).scrollTop() + 80 >= $(document).height() && flag) {
                 // 提示加载中
                 $(".index-wrap").append('<div class="item-btn loading" ><span>加载中... </span><span class="loading-pic"></span></div>');
                 flag = false; //加载中不允许插入加载提示
-
-                let a = setTimeout(function () {
-                    $(".index-wrap").append(list);
-                    $('.item-btn').remove();
-                    flag = true;
-                    clearTimeout(a);
-                }, 1000);
+                // 获取下一页动态
+                $.ajax({
+                    url:'',
+                    data:'', // 参数是页码
+                    type:'post',
+                    contentType:'application/json',
+                    success:function (data) {
+                        if(data.isMore){
+                            $(".index-wrap").append(showMoment(data.list)); // 在动态列表内插入新的动态
+                            $('.item-btn').remove();   // 移除加载提示
+                            flag = true;
+                        }
+                        else{
+                            // 显示已经是全部
+                            $('.item-btn').remove();   // 移除加载提示
+                        }
+                    },
+                });
             }
-
         });
     });
 </script>

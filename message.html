@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>留言-闲言轻博客</title>
+    <title>留言-闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
@@ -66,44 +66,29 @@
             <div class="item-btn">
                 <button class="layui-btn layui-btn-normal" id="item-btn">提交</button>
             </div>
-
-            <div id="LAY-msg-box">
-                <!--<div class="info-box">
-                    <div class="info-item">
-                        <img class="info-img" src="res/static/images/info-img.png" alt="">
-                        <div class="info-text">
-                            <p class="title count">
-                                <span class="name">一片空白</span>
-                                <span class="info-img like"><i class="layui-icon layui-icon-praise"></i>0</span>
-                            </p>
-                            <p class="info-intr">
-                                父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山人海去看更广阔的天空，那个时候期望自己有一双翅膀，能够像鸟儿一样飞得高，看得远。虽然父亲有时会和自己开玩笑，但在做错事的时候会受到严厉的训斥。父亲有双粗糙的大手掌。</p>
-                        </div>
-                    </div>
-                </div>-->
-            </div>
-
+            <!--留言显示板块-->
+            <div id="LAY-msg-box"></div>
             <div id="test1" class="paging"></div>
         </div>
     </div>
 </div>
 <div class="footer">
     <p>
-        <span>&copy; 2018</span>
+        <span>&copy; 2019</span>
         <span><a href="http://www.layui.com" target="_blank">浙江大学软件学院</a></span>
         <span>S403</span>
     </p>
     <p><span>人生就是一场修行，祝君猪事顺利</span></p>
 </div>
 </div>
-<script src="res/layui/layui.js">
-
-</script>
-
+<script src="res/jquery/Myfunc.js"></script>
+<script src="res/jquery/jquery-1.12.4.js"></script>
+<script src="res/layui/layui.js"></script>
+<!--留言模版-->
 <script id="LAY-msg-tpl" type="text/html">
     <div class="info-box">
         <div class="info-item">
-            <img class="info-img" src={{ d.avatar }} alt="" style="width: 70px;height: 70px;">
+            <img class="info-img" src={{d.avatar}} style="width:70px;height:70px;">
             <div class="info-text">
                 <p class="title count">
                     <span class="name">{{ d.username }}</span>
@@ -112,64 +97,62 @@
 				  	{{ d.praise }}
 				 	</span>
                 </p>
-                <p class="info-intr">
-                    {{ d.content }}
-                </p>
+                <p class="info-intr">{{ d.content }}</p>
             </div>
         </div>
     </div>
 </script>
+<script src="res/jquery/Myfunc.js"></script>
 <script>
     layui.config({
         base: 'res/static/js/'
     }).use('blog');
 </script>
-<script src="res/jquery/jquery-1.12.4.js"></script>
 <script>
     $(function () {
-        $.get("",function (data) {
-            localStorage.setItem("messages",data);  //并不确定data是否要用stringily()转成json字符串,字符串对象用Json.parse()转换
-        });
-
-        let messages =[{'nick':"小可爱",'headpic':"res/layui/images/face/100.jpeg","like":"10","text":"封楠的小可爱又来给她留言啦～"},{'nick':"小可爱",'headpic':"res/layui/images/face/1.gif","like":"10","text":"封楠的小可爱来给她留言啦～"},{'nick':"wl",'headpic':"res/layui/images/face/100.jpeg","like":"5","text":"我的人生乐趣之一就是逗go鸭生气"},{'nick':"小可爱",'headpic':"res/layui/images/face/102.jpg","like":"10","text":"小wl不会给封楠留言的啦～"},{'nick':"小可爱",'headpic':"res/layui/images/face/3.gif","like":"10","text":"封楠的小可爱第一次来给她留言啦～"}];
         // 初始化用户信息
-        let data = JSON.parse(localStorage.getItem('pdata'));
+        let user = JSON.parse(localStorage.getItem('UserAccount'));
 
-        $('.head-pic').css({
-            background: data.headpic + ' center center',
-            backgroundSize: "100%"
+        $.ajax({
+            url:'http://192.168.1.105:8080/look/messages',
+            type:'post',
+            xhrFields:{
+                withCredentials:true
+            },
+            contentType: "application/json",
+            data:JSON.stringify({'ownerAccount':user}),
+            success:function (data) {
+                console.log(data);
+                // 页面初始化
+                $('.head-pic').css({
+                    background:`url("${data.ownerInfo.headpic}") center center`,
+                    backgroundSize: "100%"
+                });
+                $('.nick').text(data.ownerInfo.name);
+                updateContent(data.messages);
+
+                // 分页设置
+                layui.laypage.render({
+                    elem: 'test1', //test1是ID，不用加#号
+                    count: data.totalMessages,
+                    theme: '#07A8C5',
+                    jump: function (obj,first) {
+                        if(!first) {
+                            alert('new')
+                        }
+                    }
+                });
+            }
         });
-        $('.nick').text(data.nickname);
 
         // 退出跳转
         $('.exit').on("click", function () {
             if (confirm("您确认要退出闲言吗？") == true) {
                 $(window).attr('location', 'login.html');
-                localStorage.removeItem("data");
-                localStorage.removeItem("pdata");
+                localStorage.removeItem("UserAccount");
             }
         });
 
-        // 初始化页面内容
-        function updateContent(messages){
-            let content = " ";
-            for(let i=0; i<messages.length; i++){
-                content = content +`<div class="info-box">
-                    <div class="info-item">
-                        <img class="info-img" src="${messages[i].headpic}" style="width: 70px;height: 70px;" alt="">
-                        <div class="info-text">
-                            <p class="title count">
-                                <span class="name">${messages[i].nick}</span>
-                                <span class="info-img like "><i class="layui-icon layui-icon-praise"></i>${messages[i].like}</span>
-                            </p>
-                            <p class="info-intr">${messages[i].text}</p>
-                        </div>
-                    </div>
-                </div>`
-            }
-            $('#LAY-msg-box').html(content);
-        }
-        updateContent(messages);
     })
 </script>
 

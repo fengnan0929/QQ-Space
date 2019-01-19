@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>关于-闲言轻博客</title>
+    <title>关于-闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
     <link href="http://cdn.bootcss.com/twitter-bootstrap/2.0.4/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="res/static/css/register.css">
     <link rel="stylesheet" href="res/static/css/about.css">
-    <script src="res/jquery/jquery-1.12.4.js"></script>
+    <link href="https://cdn.bootcss.com/cropper/3.1.3/cropper.min.css" rel="stylesheet">
 </head>
 <body class="lay-blog">
 <div class="header">
@@ -64,38 +64,32 @@
                     <div id="legend" class="log-head">
                         <legend class="">修改资料</legend>
                     </div>
-
                     <div class="control-group ">
                         <label class="control-label"></label>
                         <div class="controls fileUpload">
                             <input type="file" id="upload" accept="image/jpg, image/png, image/jpeg, image/gif">
-                            <span class="upload">点击修改</span>
+                            <span class="upload" id="result">点击修改</span>
                         </div>
                     </div>
-
                     <div class="control-group">
-                        <!-- Appended input-->
                         <label class="control-label">邮箱</label>
                         <div class="controls">
                             <div class="input-append">
                                 <input class="span2 email" type="email" disabled="disabled">
                             </div>
-                            <p class="help-block"></p>
+                            <p class="help-block">提示：邮箱作为登录账号不可改</p>
                         </div>
-
-
-                        <!-- Text input-->
+                    </div>
+                    <div class="control-group">
                         <label class="control-label">昵称</label>
                         <div class="controls">
                             <input type="text" class="input-xlarge nickname">
                             <p class="help-block"></p>
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label">性别</label>
                         <div class="controls">
-                            <!-- Inline Radios -->
                             <label class="radio inline">
                                 <input type="radio" value="男" name="sex">
                                 男
@@ -107,8 +101,6 @@
                         </div>
                     </div>
                     <div class="control-group">
-
-                        <!-- Text input-->
                         <label class="control-label">年龄</label>
                         <div class="controls">
                             <input type="number" class="input-xlarge age">
@@ -116,9 +108,6 @@
                         </div>
                     </div>
                     <div class="control-group">
-
-
-                        <!-- Select Basic -->
                         <label class="control-label">星座</label>
                         <div class="controls">
                             <select class="input-xlarge xinzuo">
@@ -136,10 +125,7 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="control-group">
-
-                        <!-- Textarea -->
                         <label class="control-label">个性签名</label>
                         <div class="controls">
                             <div class="textarea">
@@ -147,16 +133,12 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="control-group">
+                    <div>
                         <label class="control-label"></label>
-
-                        <!-- Button -->
                         <div class="controls">
-                            <button class="sub-button">提交</button>
+                            <span class="sub-button">提交</span>
                         </div>
                     </div>
-
                 </fieldset>
             </form>
         </div>
@@ -170,67 +152,229 @@
     </p>
     <p><span>人生就是一场修行，祝君猪事顺利</span></p>
 </div>
+<div class="big-mask"  style="display: none">
+    <div class="box">
+        <div class="show">
+            <img src="" id="photo">
+            <div class="img-preview"></div>
+            <button class="btn btn-primary ok-btn" onclick="crop()">确认裁剪</button>
+        </div>
+    </div>
+</div>
+
 <script src="res/layui/layui.js"></script>
 <script src="res/jquery/jquery-1.12.4.js"></script>
+<script src="https://cdn.bootcss.com/cropper/3.1.3/cropper.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
     layui.config({
         base: 'res/static/js/'
     }).use('blog');
 </script>
-
+<!--修改资料-->
 <script>
-    /*var data = {
-        'personal': {
-            nickname: '哐哐哐',
-            headpic: 'url("res/layui/images/face/100.jpeg")',
-            motto: '我是alone鸭，今年三岁了',
-            sex: "女",
-            age: '3',
-            xinzuo: '天蝎座',
-            email:'233@qq.com'
-        },
-        'static': {dongtai: '248', liuyan: '129'},
-        'dongtailist': [{nickname: "哐哐哐", headpic: "url('res/layui/images/face/100.jpeg')", text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。", time: "2019-01-03  12:50", like: "", pic: "src='res/static/images/item.png'"}, {nickname: "哐哐哐", headpic: "url('res/layui/images/face/100.jpeg')", text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。", time: "2019-01-03  12:50", like: "", pic: "src='res/static/images/item.png'"}, {nickname: "哐哐哐", headpic: "url('res/layui/images/face/100.jpeg')", text: "父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山。", time: "2019-01-03  12:50", like: "", pic: "src='res/static/images/item.png'"}],
-        'haoyoulist': [
-            {nickname: '王玲', headpic: "url('res/layui/images/face/100.jpeg')"},
-            {nickname: 'alone鸭', headpic: "url('res/layui/images/face/2.gif')"},
-            {nickname: '王二', headpic: "url('res/layui/images/face/3.gif')"}
-        ]
-    };*/
-    let data = JSON.parse(localStorage.getItem('pdata'));
-
     $(function () {
-        $('.controls .email').val(data.email);
-        $('.controls .nickname').val(data.nickname);
-        $('.controls .age').val(data.age);
-        $('.controls .xinzuo').val(data.xinzuo);
-        $('.controls .motto').val(data.motto);
-        $('.controls .upload').css({
-            background: data.headpic + " center center",
-            backgroundSize: '100%'
+        // 获取个人资料数据
+        $.ajax({
+            url:'',
+            type:'get',
+            contentType: "application/json",
+            success:function (data) {
+                // 将个人数据注入表单
+                $('.controls .email').val(data.email);
+                $('.controls .nickname').val(data.nickname);
+                $('.controls .age').val(data.age);
+                $('.controls .xinzuo').val(data.xinzuo);
+                $('.controls .motto').val(data.motto);
+                $('.controls .upload').css({
+                    background: `url("${data.headpic}") center center`,
+                    backgroundSize: '100%'
+                });
+                $("input:radio[name='sex'][value='" + data.sex + "']").prop("checked", "checked");
+            }
         });
-        $("input:radio[name='sex'][value='" + data.sex + "']").prop("checked", "checked");
-
-        /*  原始粗暴的写法
-
-        if(data.personal.sex =='男'){
-            $('.controls .male').attr(
-                'checked','checked'
-            )
-		}
-		else {
-		    $('.controls .female').attr(
-            'checked','checked'
-        )}*/
 
         // 退出跳转
         $('.exit').on("click", function () {
             if (confirm("您确认要退出闲言吗？") == true) {
                 $(window).attr('location', 'login.html');
-                localStorage.removeItem("data");
-                localStorage.removeItem("pdata");
+                localStorage.removeItem("userAccount");
             }
-        })
+        });
+
+        // 数据格式的验证及提交
+        function checkData() {
+            //昵称的验证
+            let changeFlag = 0;
+            let $nickname = $('.nickname');
+            let nickname = $nickname.val();
+            $nickname.change(function () {
+                nickname = $.trim($nickname.val());
+                changeFlag += 1;
+            });
+            $nickname.on('blur', function () {
+                if (!nickname || nickname.length > 8) {
+                    $nickname.val('');
+                    $nickname.parents('.control-group').attr('class', 'error control-group');
+                }
+                else {
+                    $nickname.parents('.control-group').attr('class', 'control-group');
+                }
+            });
+
+            //年龄的验证
+            let $age = $('.age');
+            let age = $age.val();
+            $age.change(function () {
+                age = $age.val();
+                changeFlag += 1;
+            });
+            $age.on('blur', function () {
+                let reg = /^(?:[1-9][0-9]?|1[01][0-9]|120)$/;
+                if (!reg.test(age)) {
+                    $age.parents('.control-group').attr('class', 'error control-group');
+                    $age.val('');
+                }
+                else {
+                    $age.parents('.control-group').attr('class', 'control-group');
+                }
+            });
+
+            //星座的选取
+            let $xinzuo = $('.xinzuo');
+            let xinzuo = $xinzuo.val();
+            $xinzuo.change(function () {
+                xinzuo = $xinzuo.val();
+                changeFlag += 1;
+            });
+
+            //个性签名设置
+            let $motto = $('.motto');
+            let motto = $motto.val();
+            $motto.change(function () {
+                motto = $motto.val;
+                changeFlag += 1;
+            });
+
+            //性别的选取
+            let sex = $("input:radio[name='sex'][checked='checked']").attr('value');
+            $("input:radio[name='sex']").on('click', function () {
+                $(this).attr('checked', 'checked');
+                $(this).parent().siblings().children('input').removeAttr('checked');
+                let $sex = $("input:radio[name='sex'][checked='checked']");
+                sex = $sex.attr('value');
+                console.log(sex);
+                changeFlag += 1;
+            });
+
+            // 提交修改
+            $('.sub-button').on('click', function () {
+                if (!changeFlag) {
+                    confirm('内容没有变化，是否提交？')
+                }
+                else {
+                    alert('提交成功！');
+                    let userInfo= {
+                        nickname:nickname,
+                        motto:motto,
+                        sex:sex,
+                        age:age,
+                        xinzuo:xinzuo
+                    };
+                    $.ajax({
+                        url:'',
+                        type:'post',
+                        data:JSON.stringify(userInfo),
+                        success: function(data){
+                            console.log(data);
+                        },
+                        contentType: "application/json",
+                    });
+                }
+                changeFlag = 0;
+            });
+        }
+        checkData();
+    });
+</script>
+<!-- 更换头像-->
+<script>
+    // cropper.js调用配置
+    var initCropper = function (img, input) {
+        var $image = img;
+        var options = {
+            aspectRatio: 1, // 纵横比
+            viewMode: 2,
+            preview: '.img-preview' // 预览图的class名
+        };
+        $image.cropper(options);
+        var $inputImage = input;
+        var uploadedImageURL;
+        if (URL) {
+            // 给input添加监听
+            $inputImage.change(function () {
+                // 出现蒙版
+                $('.big-mask').css('display', 'block');
+                var files = this.files;
+                var file;
+                if (!$image.data('cropper')) {
+                    return;
+                }
+                if (files && files.length) {
+                    file = files[0];
+                    // 判断是否是图像文件
+                    if (/^image\/\w+$/.test(file.type)) {
+                        // 如果URL已存在就先释放
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                        }
+                        uploadedImageURL = URL.createObjectURL(file);
+                        // 销毁cropper后更改src属性再重新创建cropper
+                        $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
+                        $inputImage.val('');
+                    } else {
+                        window.alert('请选择一个图像文件！');
+                    }
+                }
+            });
+        } else {
+            $inputImage.prop('disabled', true).addClass('disabled');
+        }
+    };
+    // 图片裁剪函数
+    var crop = function () {
+        var $image = $('#photo');  // 被选中供裁剪的图片
+        var $target = $('#result'); // 裁剪完成的图像存放的目标位置
+        $image.cropper('getCroppedCanvas', {
+            width: 100, // 裁剪后的长宽
+            height: 100
+        }).toBlob(function (blob) {
+            // 裁剪后将图片放到指定标签
+            $target.css('background', 'url("' + URL.createObjectURL(blob) + '") center center');
+            blobToDataURL(blob,function (dataURL) {
+                //  裁剪的图片先转成base64编码
+                $.ajax({
+                    url:'http://192.168.1.111:8080/user/test',
+                    type:'post',
+                    data:dataURL,
+                    success:function () {
+                        alert('1');
+                    },
+                    contentType: "application/json",
+                });
+            });
+        });
+        $('.big-mask').css('display', 'none'); // 隐藏蒙版
+    };
+    // 将blob转成base64
+    var blobToDataURL =function(blob, callback) {
+        var a = new FileReader();
+        a.onload = function (e) { callback(e.target.result); };
+        a.readAsDataURL(blob);
+    };
+    // 函数调用的入口
+    $(function () {
+        initCropper($('#photo'), $('#upload'));
     });
 </script>
 </body>

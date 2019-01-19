@@ -23,8 +23,6 @@ body {
     background: #ACD0D8;
 }
 
-/* 网站头部 */
-
 /* start header */
 .lay-blog .header {
     position: relative;
@@ -210,7 +208,7 @@ body {
 /* end header */
 
 /* 辅助 */
-.lay-blog .container .count .layblog-this {
+.layblog-this {
     color: #FF5722 !important;
 }
 
@@ -251,7 +249,20 @@ body {
     background: #fff;
     padding-top: 20px;
 }
-
+.lay-blog .container .item .like{
+    display: inline-block;
+    float: right;
+    height: 60px;
+    line-height: 60px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.lay-blog .container .item i{
+    font-size: 24px;
+    padding-right: 5px;
+    position: relative;
+    top: 4px;
+}
 .lay-blog .container .item .item-box {
     padding: 0 35px 24px;
     font-size: 14px;
@@ -269,7 +280,8 @@ body {
 
 .lay-blog .container .item p {
     line-height: 30px;
-   /* padding-bottom: 10px;*/
+    padding-top: 5px;
+    font-size: 16px;
 }
 
 .lay-blog .container .item .comment {
@@ -328,12 +340,7 @@ body {
 
 /* end container */
 
-/*    height: 60px;
-    margin-top: -60px;
-    background: maroon;
-*/
-
-/* start foooter */
+/* start footer */
 .lay-blog .footer {
     width: 100%;
     padding: 30px 0;
@@ -355,10 +362,9 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* end foooter */
+/* end footer */
 
 /* start message*/
-
 .container-message textarea {
     font-size: 14px;
 }
@@ -465,7 +471,6 @@ body {
     text-align: right;
     padding-top: 20px;
 }
-
 .container-comment .btnbox a {
     display: inline-block;
     height: 38px;
@@ -531,7 +536,7 @@ body {
     margin-right: 2px;
 }
 
-/*个人档结束*/
+/*个人档 end*/
 
 /*好友列表*/
 .leftBar .friendList {
@@ -578,7 +583,7 @@ body {
     background-size: 100%;
 }
 
-/*好友列表结束*/
+/*好友列表 end*/
 
 /*数据统计*/
 .leftBar .data-statics {
@@ -612,11 +617,11 @@ body {
     font-size: 30px;
 }
 
-/*数据统计结束*/
+/*数据统计 end*/
 
-/*左侧工具栏结束*/
+/*左侧工具栏 end*/
 
-/*大背景图片开始*/
+/*大背景图片*/
 .bg .self-intro {
     position: absolute;
     left: 50px;
@@ -646,7 +651,7 @@ body {
     bottom: 5px;
 }
 
-/*大背景图片结束*/
+/*大背景图片 end*/
 
 /*首页整体布局*/
 .index-wrap {
@@ -659,7 +664,7 @@ body {
     overflow: hidden;
 }
 
-/*首页整体布局结束*/
+/*首页整体布局 end*/
 .bg {
     width: 100%;
     height: 250px;
@@ -750,7 +755,7 @@ body {
     background: url("../../../res/layui/css/modules/layer/default/icon.png") -30px 0;
 }
 
-/*动态发表及图片上传部分结束*/
+/*动态发表及图片上传部分 end*/
 
 /*单条动态的详细信息*/
 
@@ -793,4 +798,4 @@ body {
     justify-content: space-between;
 }
 
-/*单条动态的详细信息结束*/
+/*单条动态的详细信息 send*/

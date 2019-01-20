@@ -84,24 +84,6 @@
 <script src="res/jquery/Myfunc.js"></script>
 <script src="res/jquery/jquery-1.12.4.js"></script>
 <script src="res/layui/layui.js"></script>
-<!--留言模版-->
-<script id="LAY-msg-tpl" type="text/html">
-    <div class="info-box">
-        <div class="info-item">
-            <img class="info-img" src={{d.avatar}} style="width:70px;height:70px;">
-            <div class="info-text">
-                <p class="title count">
-                    <span class="name">{{ d.username }}</span>
-                    <span class="info-img like">
-				  	<i class="layui-icon layui-icon-praise"></i>
-				  	{{ d.praise }}
-				 	</span>
-                </p>
-                <p class="info-intr">{{ d.content }}</p>
-            </div>
-        </div>
-    </div>
-</script>
 <script src="res/jquery/Myfunc.js"></script>
 <script>
     layui.config({
@@ -114,7 +96,7 @@
         let user = JSON.parse(localStorage.getItem('UserAccount'));
 
         $.ajax({
-            url:'http://192.168.1.105:8080/look/messages',
+            url:'http://47.100.226.85:8080/find-friends/look/messages',
             type:'post',
             xhrFields:{
                 withCredentials:true
@@ -144,15 +126,6 @@
                 });
             }
         });
-
-        // 退出跳转
-        $('.exit').on("click", function () {
-            if (confirm("您确认要退出闲言吗？") == true) {
-                $(window).attr('location', 'login.html');
-                localStorage.removeItem("UserAccount");
-            }
-        });
-
     })
 </script>
 

@@ -54,6 +54,50 @@ body {
     padding: 25px 0 0 85px;
 }
 
+.search-output {
+    width: 100%;
+    background-color: #ffffff;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+
+.search-output li {
+    display: inline-block;
+    width: 100%;
+    line-height: 80px;
+    font-size: 16px;
+}
+
+.search-output li img {
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.search-output .follow,.search-output .new {
+    display: inline-block;
+    height: 32px;
+    width: 60px;
+    text-align: center;
+    float: right;
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-top: 25px;
+    margin-right: 15px;
+    background-color: #0a9ebd;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+.search-output .search-mail {
+    color: #8e8a82;
+    font-size: 14px;
+}
+
 .lay-blog .blog-sewrap {
     margin-bottom: 0px;
 }
@@ -248,8 +292,10 @@ body {
     margin-bottom: 15px;
     background: #fff;
     padding-top: 20px;
+    position: relative;
 }
-.lay-blog .container .item .like{
+
+.lay-blog .container .item .like {
     display: inline-block;
     float: right;
     height: 60px;
@@ -257,12 +303,14 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
-.lay-blog .container .item i{
+
+.lay-blog .container .item i {
     font-size: 24px;
     padding-right: 5px;
     position: relative;
     top: 4px;
 }
+
 .lay-blog .container .item .item-box {
     padding: 0 35px 24px;
     font-size: 14px;
@@ -317,12 +365,13 @@ body {
     font-size: 16px;
 }
 
-.loading-pic{
+.loading-pic {
     display: inline-block;
     width: 16px;
     height: 16px;
     background: url("../../../res/static/images/loading.gif") center center;
 }
+
 @media only screen and (max-width: 750px) {
     .lay-blog .container {
         width: 100%;
@@ -380,6 +429,25 @@ body {
 .lay-blog .container-message .info-item {
     font-size: 14px;
     margin-bottom: 66px;
+}
+
+.info-box {
+    position: relative;
+}
+
+.info-box .delete {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 75px;
+    top: 0px;
+    cursor: pointer;
+}
+
+.info-box .delete i {
+    font-size: 28px !important;
+    opacity: 0.6;
 }
 
 .lay-blog .container-message .info-img {
@@ -471,6 +539,7 @@ body {
     text-align: right;
     padding-top: 20px;
 }
+
 .container-comment .btnbox a {
     display: inline-block;
     height: 38px;
@@ -783,6 +852,21 @@ body {
     margin-left: 2px;
 }
 
+.index-wrap .delete {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 90px;
+    top: 27px;
+    cursor: pointer;
+}
+
+.index-wrap .delete i {
+    font-size: 28px !important;
+    opacity: 0.8;
+}
+
 .publish-time {
     color: #99958d;
     font-size: 13px;
@@ -799,3 +883,8 @@ body {
 }
 
 /*单条动态的详细信息 send*/
+::-webkit-input-placeholder {
+   color:#FFFFFF;
+    opacity: 0.6;
+    font-size: 14px;
+}

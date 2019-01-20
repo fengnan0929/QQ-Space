@@ -21,7 +21,11 @@
             <div class="layui-form-item blog-sewrap">
                 <div class="layui-input-block blog-sebox">
                     <i class="layui-icon layui-icon-search"></i>
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input" placeholder="输入昵称或邮箱账号关注好友">
+                    <div class="search-output">
+                        <ul class="search-follow">
+                        </ul>
+                    </div>
                 </div>
             </div>
         </form>
@@ -147,26 +151,6 @@
 </div>
 
 <script src="res/jquery/Myfunc.js"></script>
-<!--新动态模版-->
-<script id="LAY-msg-tpl" type="text/html">
-    <div class="item">
-        <div class="item-box  layer-photos-demo1 layer-photos-demo">
-            <div class="publish-details">
-                <span class="head-nail"  {{d.avatar}}></span>
-                <div class="nail-right">
-                    <span class="nickname">{{d.username}}</span>
-                    <span class="publish-time">发布于：{{d.time}}</span>
-                </div>
-            </div>
-            <p>{{d.content}}</p>
-            <img {{d.pic}} alt="" {{d.style}}>
-        </div>
-        <div class="comment count">
-            <a href="details.html#comment">评论</a>
-            <a href="javascript:;" class="like">点赞</a>
-        </div>
-    </div>
-</script>
 <script src="res/layui/layui.js"></script>
 <script>
     layui.config({
@@ -178,8 +162,9 @@
     $(function () {
         // 获取当前用户的个人信息以及好友动态
         let userAccount = JSON.parse(localStorage.getItem('UserAccount'));
+        let pageOne;
         $.ajax({
-            url:'http://192.168.1.105:8080/look/homepage',
+            url:'http://47.100.226.85:8080/find-friends/look/homepage',
             type:'post',
             contentType:'application/json',
             xhrFields:{
@@ -188,6 +173,7 @@
             data:JSON.stringify({'owner':userAccount}),
             success:function (data) {
                 console.log(data);
+                pageOne = data.lastPage;
                 // 初始化用户信息
                 $('.head-pic').css({
                     background:`url("${data.personal.headpic}") center center`,
@@ -219,43 +205,40 @@
         $('.friend-items').delegate('li','click',function () {
             let friend = $(this).children('.friendEmail').text();
             console.log(friend);
-            /*localStorage.setItem("UserAccount", JSON.stringify(friend));
+            localStorage.setItem("UserAccount", JSON.stringify(friend));
             var newWeb=window.open('_blank');
-            newWeb.location='index.html';*/
+            newWeb.location='index.html';
         });
 
-        // 退出跳转
-        $('.exit').on("click", function () {
-            if (confirm("您确认要退出闲言吗？") == true) {
-                $(window).attr('location', 'login.html');
-                // 清除当前用户的cookies和账户
-                localStorage.removeItem('UserAccount');
-            }
-        });
 
         // 动态列表懒加载
-        let flag = true;  //是否在加载过程中
+        let flag = true;//是否在加载过程中
+        let page =1;
         $(window).on('scroll', function () {
-            if ($(window).height() + $(window).scrollTop() + 80 >= $(document).height() && flag) {
+            if ($(window).height() + $(window).scrollTop() + 80 >= $(document).height() && flag && pageOne) {
                 // 提示加载中
                 $(".index-wrap").append('<div class="item-btn loading" ><span>加载中... </span><span class="loading-pic"></span></div>');
                 flag = false; //加载中不允许插入加载提示
+                page++;
                 // 获取下一页动态
                 $.ajax({
-                    url:'',
-                    data:'', // 参数是页码
+                    url:'http://47.100.226.85:8080/find-friends/moment/refresh',
+                    xhrFields:{
+                        withCredentials:true
+                    },
+                    data:JSON.stringify({
+                        ownerAccount: userAccount,
+                        pageNumber:page,
+                        isPublish:'false'
+                    }), // 参数是页码
                     type:'post',
                     contentType:'application/json',
                     success:function (data) {
-                        if(data.isMore){
-                            $(".index-wrap").append(showMoment(data.list)); // 在动态列表内插入新的动态
+                        console.log(data);
+                            $(".index-wrap").append(showMoment(data.moments)); // 在动态列表内插入新的动态
                             $('.item-btn').remove();   // 移除加载提示
                             flag = true;
-                        }
-                        else{
-                            // 显示已经是全部
-                            $('.item-btn').remove();   // 移除加载提示
-                        }
+                            pageOne = data.lastPage;
                     },
                 });
             }

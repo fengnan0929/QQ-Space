@@ -1,7 +1,7 @@
 /**
-   @Name：闲言
-   @Author 哐哐哐
-**/
+ @Name：闲言
+ @Author 哐哐哐
+ **/
 
 layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (exports) {
     var laypage = layui.laypage, $ = layui.jquery, laytpl = layui.laytpl;
@@ -65,7 +65,7 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                 $("body").append("<span class='num'>" + options.str + "</span>");
 
                 var box = $(".num");
-                var left = options.obj.offset().left + options.obj.width() ;
+                var left = options.obj.offset().left + options.obj.width();
                 var top = options.obj.offset().top - 10;
                 box.css({
                     "position": "absolute",
@@ -94,11 +94,32 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
             prop.find('i').removeClass('niceIn');
         }, 1000);
     }
+
     // 评论的特效 end
+
+    // start 取消赞函数
+    function isliked(id, isCancel, type) {
+        $.ajax({
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            url: 'http://47.100.226.85:8080/find-friends/look/like', // 后端接口
+            data: JSON.stringify({'id': id, 'isCancel': isCancel, 'type': type}),
+            contentType: "application/json",
+            success: function () {
+                console.log(1);
+            }
+        });
+    }
+
+    // 取消赞函数 end
 
     //  start 留言点赞
     $(function () {
         $('#LAY-msg-box').delegate('span', 'click', function () {
+            let messageID = $(this).parents('.info-box').children('.messageID').text();
+            console.log(messageID);
             if ($(this).hasClass('like')) {
                 if (!($(this).hasClass("layblog-this"))) {
                     this.text = '已赞';
@@ -112,9 +133,10 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                     });
                     niceIn($(this));
                     layer.msg('点赞成功', {
-                        icon:6,
+                        icon: 6,
                         time: 1000
-                    })
+                    });
+                    isliked(messageID, 'false', 'message');
                 }
                 // 取消赞
                 else {
@@ -130,65 +152,106 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                     layer.msg('取消点赞', {
                         icon: 5,
                         time: 1000
-                    })
+                    });
+                    isliked(messageID, 'true', 'message');
                 }
             }
         });
     });
     //  留言点赞 end
 
-    // start 留言提交按钮
+    // start 留言提交
     $('#item-btn').on('click', function () {
         var elemCont = $('#LAY-msg-content'), content = elemCont.val();
-        // 从本地获取个人信息
-        var d = JSON.parse(localStorage.getItem('pdata'));
 
         if (content.replace(/\s/g, '') == "") {
             layer.msg('请先输入留言');
             return elemCont.focus();
         }
-        else{
-            var view = $('#LAY-msg-tpl').html();
-                data = {
-                    username: d.nickname,
-                    avatar: d.headpic,
-                    praise: 0,
-                    content: content
-                };
-
-            // 分页的内容重新渲染
-            itemsnum++;  // 数据总数+1
-            laypage.render({
-                elem: 'test1',
-                count: itemsnum,
-                theme: '#07A8C5',
-                jump: function (obj,first) {
-                    if(!first) {
-                        console.log(obj.curr); //获取当前页面
-                    }
+        else {
+            // 从本地获取被访问人信息
+            let user = JSON.parse(localStorage.getItem('UserAccount'));
+            $.ajax({
+                url: 'http://47.100.226.85:8080/find-friends/message/refresh',
+                type: 'post',
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'toAccount': user,
+                    'text': content
+                }),
+                success: function (data) {
+                    // 分页设置
+                    layui.laypage.render({
+                        elem: 'test1', //test1是ID，不用加#号
+                        count: data.totalMessages,
+                        theme: '#07A8C5',
+                        jump: function (obj, first) {
+                            if (!first) {
+                                alert('new')
+                            }
+                        }
+                    });
+                    // 更新页面内容
+                    updateContent(data.messages);
+                    elemCont.val('');
+                    layer.msg('留言成功', {
+                        icon: 1
+                    })
                 }
-            });
-
-            // 新增的留言放在首页，删除页面最后一条留言
-            if( $('.info-box').length >9){
-                $(".info-box:last-child").remove();
-            }
-
-            //模板渲染
-            laytpl(view).render(data, function (html) {
-                $('#LAY-msg-box').prepend(html);
-                elemCont.val('');
-                layer.msg('留言成功', {
-                    icon: 1
-                })
             });
         }
     });
     // 留言提交按钮 end
 
-    // start 动态的点赞
+    // start 留言删除
+    $(function () {
+        $('#LAY-msg-box').delegate('.delete', 'click', function () {
+            if (confirm('确认删除此条留言？')) {
+                let messageID = $(this).siblings('.messageID').text();
+                $.ajax({
+                    type: 'POST',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    url: 'http://47.100.226.85:8080/find-friends/message/delete', // 后端接口
+                    data: JSON.stringify({'id': messageID}),
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log(data);
+                        let timer = setTimeout(function () {
+                            layer.msg('留言已删除', {
+                                icon: 6,
+                                time: 1000
+                            });
+                            clearTimeout(timer);
+                        }, 500);
+                        layui.laypage.render({
+                            elem: 'test1', //test1是ID，不用加#号
+                            count: parseInt(data),
+                            theme: '#07A8C5',
+                            jump: function (obj, first) {
+                                if (!first) {
+                                    alert('new')
+                                }
+                            }
+                        });
+                    }
+                });
+                // 从页面删除此条留言
+                $(this).parents('.info-box').remove();
+            }
+        })
+    });
+    // 删除留言 end
+
+    // start 动态点赞
     $(function () {
         $('.index-wrap').delegate('span', 'click', function () {
+            let momentID = $(this).parents('.item').children('.momentID').text();
+            console.log(momentID);
             if ($(this).hasClass('like')) {
                 if (!($(this).hasClass("layblog-this"))) {
                     this.text = '已赞';
@@ -202,10 +265,11 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                     });
                     niceIn($(this));
                     layer.msg('点赞成功', {
-                        icon:6,
+                        icon: 6,
                         time: 1000,
-                        offset:['50%','50%']
-                    })
+                        offset: ['50%', '50%']
+                    });
+                    isliked(momentID, false, 'moment');
                 }
                 // 取消赞
                 else {
@@ -221,20 +285,51 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                     layer.msg('取消点赞', {
                         icon: 5,
                         time: 1000,
-                        offset:['50%','50%']
-                    })
+                        offset: ['50%', '50%']
+                    });
+                    isliked(momentID, true, 'moment');
                 }
             }
         });
     });
-    // end 动态的点赞
+    // end 动态点赞
+
+    // start 动态删除
+    $(function () {
+        $('.index-wrap').delegate('.delete', 'click', function () {
+            if (confirm('确认删除此条动态？')) {
+                let momentID = $(this).siblings('.momentID').text();
+                $.ajax({
+                    type: 'POST',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    url: 'http://47.100.226.85:8080/find-friends/moment/delete', // 后端接口
+                    data: JSON.stringify({'id': momentID}),
+                    contentType: "application/json",
+                    success: function () {
+                        layer.msg('动态已删除', {
+                            icon: 6,
+                            time: 1000
+                        })
+                    }
+                });
+                // 从主页删除此条动态
+                $(this).parents('.item').remove();
+                // 刷新动态数
+                let $totalMoment = $('.static-item').eq(0).children('span');
+                $totalMoment.text($totalMoment.text() - 1);
+            }
+        })
+    });
+    // 动态删除 end
 
     // start 上传动态配图
-    let picFile,picSrc;
-    $('#upload').on('change',function () {
+    let picFile, picSrc;
+    $('#upload').on('change', function () {
         // 获取读到的上传文件
         picFile = document.getElementById('upload').files[0];
-        if(picFile){
+        if (picFile) {
             $('#imagepath').text(picFile.name);
             // 将成功上传图标改为显示状态
             $('#suc_upload').css({
@@ -244,8 +339,8 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
             reader.readAsDataURL(picFile);
             //监听文件读取结束后事件
             reader.onloadend = function (e) {
-                if(e.target.result){
-                    picSrc = 'src =' +e.target.result;
+                if (e.target.result) {
+                    picSrc = 'src =' + e.target.result;
                 }
             };
         }
@@ -254,47 +349,51 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
     // 上传动态配图 end
 
     // start 发表动态
-    $('#submit-btn').on('click',function () {
+    $('#submit-btn').on('click', function () {
         var content = $('#LAY-msg-content').val();
         if (content.replace(/\s/g, '') == "") {
-            layer.msg('请先输入动态内容',{
-                offset:['30%','50%']
+            layer.msg('请先输入动态内容', {
+                offset: ['30%', '50%']
             });
-            return  $('#LAY-msg-content').focus();
+            return $('#LAY-msg-content').focus();
         }
 
-        if(!picFile){
+        if (!picFile) {
             picSrc = '';
         }
 
-        let newDongtai= {
-            content:content,
-            pic : picSrc
+        let newDongtai = {
+            content: content,
+            pic: picSrc,
+            isPublish: 'true'
         };
         console.log(newDongtai);
         $.ajax({
             type: 'POST',
-            xhrFields:{
-                withCredentials:true
+            xhrFields: {
+                withCredentials: true
             },
-            url: 'http://192.168.1.105:8080/moment/refresh', // 后端接口
+            url: 'http://47.100.226.85:8080/find-friends/moment/refresh', // 后端接口
             data: JSON.stringify(newDongtai),
             contentType: "application/json",
             success: function (data) {
-                console.log(data);
                 $('.item').remove();
                 $(showMoment(data.moments)).insertAfter(".fixed");
                 $('#LAY-msg-content').val('');
                 layer.msg('动态发布成功', {
                     icon: 1,
                 });
+                // 刷新动态总数
+                let $totalMoment = $('.static-item').eq(0).children('span');
+                $totalMoment.text(parseInt($totalMoment.text()) + 1);
             },
         });
 
 
         clearPre();
+
         // 清除本次上传的内容和提示内容
-        function clearPre(){
+        function clearPre() {
             picFile = null;
             picSrc = null;
             $('#suc_upload').css({
@@ -304,6 +403,88 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
         }
     });
     // 发表动态 end
+
+    // 退出页面
+    $('.exit').on("click", function () {
+        if (confirm("您确认要退出闲言吗？") == true) {
+            $(window).attr('location', 'login.html');
+            // 清除当前用户的cookies和账户
+            localStorage.removeItem('UserAccount');
+            $.ajax({
+                type: 'post',
+                xhrFields: {
+                    withCredentials: true
+                },
+                url: '47.100.226.85:8080/find-friends/user/logout',
+            })
+        }
+    });
+
+    // 查找、添加好友
+    $(function () {
+        let searchInfo = '';
+        $('.layui-input').on('change', function () {
+            searchInfo = $('.layui-input').val();
+        });
+        $('.layui-icon-search').on('click', function () {
+            if(searchInfo){
+                $.ajax({
+                    type: 'POST',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    url: 'http://47.100.226.85:8080/find-friends/user/findfriends', // 后端接口
+                    data: JSON.stringify({"keyWord":searchInfo}),
+                    contentType: "application/json",
+                    success: function (data) {
+                        let newfriend = '';
+                        if(data.length>0){
+                            $('.search-follow').html(findfriend(data));
+                            $('.search-output').css('display','block');
+                            $('.search-output').one('click',function (event) {
+
+                                if(event.target.className!=='new'){
+                                    $('.search-output').css('display','none');
+                                    $('.layui-input').val('');
+                                }
+                                else{
+                                    let friendMail = (event.target.id);
+                                    console.log(friendMail);
+                                    $.ajax({
+                                        type: 'POST',
+                                        xhrFields: {
+                                            withCredentials: true
+                                        },
+                                        url: 'http://47.100.226.85:8080/find-friends/user/makefriends', // 后端接口
+                                        data: JSON.stringify({"email":friendMail}),
+                                        contentType: "application/json",
+                                    });
+                                    newfriend = `<li>
+                                        <span class="item-head"
+                                              style="background:url('${data[0].headpic}') center center;background-size: 100%"></span>
+                                        <span>${data[0].name}</span>
+                                        <span class="friendEmail"
+                                              style="display: none">${data[0].email}</span>
+                                    </li>`;
+                                    $('.friend-items').append(newfriend);
+                                    $('.search-output').css('display','none');
+                                    $('.layui-input').val('');
+                                }
+                            })
+                        }
+                        else{
+                            $('.layui-input').val('');
+                            layer.msg('此用户不存在', {
+                                icon: 5,
+                                time: 1000,
+                                offset: ['50%', '50%']
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    });
 
     //输出test接口
     exports('blog', {});

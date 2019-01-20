@@ -63,7 +63,7 @@
             let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
             if (reg.test(account)) { // 账号符合格式要求
                 $.ajax({
-                    url:'http://192.168.1.105:8080/user/validemail',
+                    url:'http://47.100.226.85:8080/find-friends/user/validemail',
                     type: 'post',
                     data: account,
                     success:function (data) { // 账号是否注册过
@@ -106,7 +106,7 @@
                 'password':pwd
             };
             $.ajax({
-                url:'http://192.168.1.105:8080/user/login',
+                url:'http://47.100.226.85:8080/find-friends/user/login',
                 xhrFields:{
                     withCredentials:true
                 },

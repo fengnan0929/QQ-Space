@@ -174,15 +174,19 @@
 <!--修改资料-->
 <script>
     $(function () {
+        let user = JSON.parse(localStorage.getItem('UserAccount'));
         // 获取个人资料数据
         $.ajax({
-            url:'',
+            url:'http://47.100.226.85:8080/find-friends/user/personal',
             type:'get',
+            xhrFields:{
+                withCredentials:true
+            },
             contentType: "application/json",
             success:function (data) {
                 // 将个人数据注入表单
                 $('.controls .email').val(data.email);
-                $('.controls .nickname').val(data.nickname);
+                $('.controls .nickname').val(data.name);
                 $('.controls .age').val(data.age);
                 $('.controls .xinzuo').val(data.xinzuo);
                 $('.controls .motto').val(data.motto);
@@ -194,16 +198,7 @@
             }
         });
 
-        // 退出跳转
-        $('.exit').on("click", function () {
-            if (confirm("您确认要退出闲言吗？") == true) {
-                $(window).attr('location', 'login.html');
-                localStorage.removeItem("userAccount");
-            }
-        });
-
         // 数据格式的验证及提交
-        function checkData() {
             //昵称的验证
             let changeFlag = 0;
             let $nickname = $('.nickname');
@@ -257,44 +252,51 @@
             });
 
             //性别的选取
+            let $sex;
             let sex = $("input:radio[name='sex'][checked='checked']").attr('value');
             $("input:radio[name='sex']").on('click', function () {
                 $(this).attr('checked', 'checked');
                 $(this).parent().siblings().children('input').removeAttr('checked');
-                let $sex = $("input:radio[name='sex'][checked='checked']");
+                $sex = $("input:radio[name='sex'][checked='checked']");
                 sex = $sex.attr('value');
+                if(!sex){
+                    $sex.parents('.control-group').attr('class','error control-group');
+                }
                 console.log(sex);
                 changeFlag += 1;
             });
 
             // 提交修改
             $('.sub-button').on('click', function () {
-                if (!changeFlag) {
+                if ($('.error').length>0){
+                    alert('抱歉，还有内容没有通过填写！');
+                }
+                else if(!changeFlag) {
                     confirm('内容没有变化，是否提交？')
                 }
                 else {
                     alert('提交成功！');
                     let userInfo= {
-                        nickname:nickname,
-                        motto:motto,
-                        sex:sex,
-                        age:age,
-                        xinzuo:xinzuo
+                        nickname:$nickname.val(),
+                        motto:$motto.val(),
+                        sex: $sex.attr('value'),
+                        age:$age.val(),
+                        xinzuo:$xinzuo.val()
                     };
                     $.ajax({
-                        url:'',
+                        url:'http://47.100.226.85:8080/find-friends/user/personal',
                         type:'post',
+                        xhrFields:{
+                            withCredentials:true
+                        },
                         data:JSON.stringify(userInfo),
                         success: function(data){
-                            console.log(data);
                         },
                         contentType: "application/json",
                     });
                 }
                 changeFlag = 0;
             });
-        }
-        checkData();
     });
 </script>
 <!-- 更换头像-->
@@ -354,11 +356,14 @@
             blobToDataURL(blob,function (dataURL) {
                 //  裁剪的图片先转成base64编码
                 $.ajax({
-                    url:'http://192.168.1.111:8080/user/test',
+                    url:'http://47.100.226.85:8080/find-friends/user/headpic',
+                    xhrFields:{
+                        withCredentials:true
+                    },
                     type:'post',
-                    data:dataURL,
+                    data:JSON.stringify({'pic':dataURL}),
                     success:function () {
-                        alert('1');
+                        console.log(1);
                     },
                     contentType: "application/json",
                 });

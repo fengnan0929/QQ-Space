@@ -139,7 +139,7 @@
         let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
         if (reg.test(email)) {
             $.ajax({
-                url:'http://192.168.1.106:8080/user/validemail',
+                url:'http://47.100.226.85:8080/find-friends/user/validemail',
                 type: 'post',
                 data:email,
                 success:function (data) {
@@ -284,7 +284,7 @@
                 xinzuo:xinzuo
             };
             $.ajax({
-                url:'http://192.168.1.106:8080/user/register',
+                url:'http://47.100.226.85:8080/find-friends/user/register',
                 type:'post',
                 data:JSON.stringify(userInfo),
                 success: function(state){

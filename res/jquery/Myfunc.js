@@ -15,7 +15,12 @@ function getTime(timestamp) {
     var now = Date.parse(new Date()); //获取当前的时间戳
     var res;
     if (now - timestamp < 60000) {
-        res = parseInt((now - timestamp) / 1000) + "秒前";
+        if( parseInt((now - timestamp) / 1000) == 0){
+            res ='刚刚'
+        }
+        else{
+            res = parseInt((now - timestamp) / 1000) + "秒前";
+        }
     }
     else if (now - timestamp < 3600000) {
         res = parseInt((now - timestamp) / 60000) + "分钟前";
@@ -45,9 +50,10 @@ function showMoment(list) {
                                         <span class="info-img like ${(list[i].liked)?'layblog-this':''}"><i class="layui-icon  layui-icon-praise"></i>${list[i].like}</span>
                                     </div>
                                     <p>${list[i].text}</p>
-                                    <img src = ${list[i].pic} alt="" style="margin-top: 10px;display:${(list[i].pic)? 'block':'none'}">
+                                    <img ${(list[i].pic)? 'src=' +list[i].pic :''}  style="max-width:100%;margin-top: 10px;display:${(list[i].pic)? 'block':'none'}">
                                 </div>
                                 <div class="momentID" style="display: none"> ${list[i].id} </div>
+                                <span class="delete" style="display:${(list[i].deletable)? 'block':'none'} "><i class="layui-icon  layui-icon-delete"></i></span>
                             </div>`
     }
     return lists;
@@ -70,7 +76,22 @@ function updateContent(messages){
                         </div>
                     </div>
                     <div class="messageID" style="display: none">${messages[i].id}</div>
+                    <span class="delete" style="display:${(messages[i].deletable)? 'block':'none'} "><i class="layui-icon  layui-icon-delete"></i></span>
                 </div>`
     }
     $('#LAY-msg-box').html(content);
+}
+
+// 显示好友
+function findfriend(friend){
+    let content ="";
+    for(let i=0; i<friend.length; i++){
+        content = content + ` <li>
+                                <img src=${friend[i].headpic} class="search-pic">
+                                <span class="search-name">${friend[i].name}</span>
+                                <span class="search-mail">(${friend[i].email})</span>
+                                <span class=${(friend[i].friends)?"follow":"new"} id=${friend[i].email}>${(friend[i].friends)?'已关注':'关注+'}</span>
+                            </li>`
+    }
+    return content;
 }

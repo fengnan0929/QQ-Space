@@ -19,16 +19,14 @@
         <form class="layui-form blog-seach pull-left" action="">
             <div class="layui-form-item blog-sewrap">
                 <div class="layui-input-block blog-sebox">
-                    <i class="layui-icon layui-icon-search"></i>
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input" placeholder="输入昵称或邮箱账号关注好友">
+
                 </div>
             </div>
         </form>
         <div class="blog-nav pull-right">
             <ul class="layui-nav pull-left">
-                <li class="layui-nav-item"><a href="index.html">首页</a></li>
-                <li class="layui-nav-item  layui-this"><a href="message.html">留言</a></li>
-                <li class="layui-nav-item"><a href="about.html">关于</a></li>
+                <li class="layui-nav-item"><a href="friendIndex.html">好友主页</a></li>
+                <li class="layui-nav-item  layui-this"><a href="friendMessage.html">留言板</a></li>
             </ul>
             <a href="#" class="personal pull-left  layui-nav-item exit" style="font-size: 16px;">
                 <i class="layui-icon layui-icon-username"></i>
@@ -42,9 +40,8 @@
         </div>
     </div>
     <ul class="pop-nav" id="pop-nav">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="message.html">留言</a></li>
-        <li><a href="about.html">关于</a></li>
+        <li><a href="friendIndex.html">好友主页</a></li>
+        <li><a href="friendMessage.html">留言板</a></li>
     </ul>
 </div>
 <div class="bg">
@@ -93,7 +90,7 @@
 <script>
     $(function () {
         // 初始化用户信息
-        let user = JSON.parse(localStorage.getItem('UserAccount'));
+        let user = JSON.parse(localStorage.getItem('friendAccount'));
 
         $.ajax({
             url:'http://47.100.226.85:8080/find-friends/look/messages',

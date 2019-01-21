@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主页-闲言</title>
+    <title>好友主页闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
@@ -20,20 +20,14 @@
         <form class="layui-form blog-seach pull-left" action="">
             <div class="layui-form-item blog-sewrap">
                 <div class="layui-input-block blog-sebox">
-                    <i class="layui-icon layui-icon-search"></i>
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input" placeholder="输入昵称或邮箱账号关注好友">
-                    <div class="search-output">
-                        <ul class="search-follow">
-                        </ul>
-                    </div>
+
                 </div>
             </div>
         </form>
         <div class="blog-nav pull-right">
             <ul class="layui-nav pull-left">
-                <li class="layui-nav-item layui-this"><a href="index.html">首页</a></li>
-                <li class="layui-nav-item"><a href="message.html">留言</a></li>
-                <li class="layui-nav-item"><a href="about.html">关于</a></li>
+                <li class="layui-nav-item layui-this"><a href="friendIndex.html">好友主页</a></li>
+                <li class="layui-nav-item"><a href="friendMessage.html">留言板</a></li>
             </ul>
             <a href="#" class="personal pull-left  layui-nav-item exit" style="font-size: 16px;">
                 <i class="layui-icon layui-icon-username"></i>
@@ -47,9 +41,8 @@
         </div>
     </div>
     <ul class="pop-nav" id="pop-nav">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="message.html">留言</a></li>
-        <li><a href="about.html">关于</a></li>
+        <li><a href="friendIndex.html">好友主页</a></li>
+        <li><a href="friendMessage.html">留言板</a></li>
     </ul>
 </div>
 <div class="bg">
@@ -78,12 +71,6 @@
                 <span class="intro-head">个人档</span>
                 <span class="intro-item"><i class="layui-icon layui-icon-component"></i></span>
                 <span class="intro-item"><i class="layui-icon layui-icon-nan"></i></span>
-            </div>
-            <div class="friendList">
-                <span class="intro-head">我的好友</span>
-                <ul class="friend-items">
-
-                </ul>
             </div>
         </div>
         <div class="contar-wrap index-wrap">
@@ -126,7 +113,7 @@
 <script>
     $(function () {
         // 获取当前用户的个人信息以及好友动态
-        let userAccount = JSON.parse(localStorage.getItem('UserAccount'));
+        let userAccount = JSON.parse(localStorage.getItem('friendAccount'));
         let pageOne;
         $.ajax({
             url:'http://47.100.226.85:8080/find-friends/look/homepage',
@@ -152,16 +139,6 @@
                 $('.static-item').eq(0).children('span').text(data.statics.dongtai);
                 $('.static-item').eq(1).children('span').text(data.statics.liuyan);
 
-                // 初始化好友列表
-                let content = '';
-                for (let i = 0; i < data.friends.length; i++) {
-                    content = content + `<li >
-                                        <span class="item-head" style="background:url('${data.friends[i].headpic}') center center;background-size: 100%"></span>
-                                        <span>${data.friends[i].nickname}</span>
-                                        <span class="friendEmail" style="display: none" >${data.friends[i].email}</span>
-                                  </li>`
-                }
-                $('.friend-items').html(content);
                 //展示好友动态
                 $(showMoment(data.dongtailist)).insertAfter(".fixed");
             }
@@ -170,9 +147,9 @@
         $('.friend-items').delegate('li','click',function () {
             let friend = $(this).children('.friendEmail').text();
             console.log(friend);
-            localStorage.setItem("friendAccount", JSON.stringify(friend));
+            localStorage.setItem("UserAccount", JSON.stringify(friend));
             var newWeb=window.open('_blank');
-            newWeb.location='friendIndex.html';
+            newWeb.location='index.html';
         });
 
 

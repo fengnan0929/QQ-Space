@@ -180,7 +180,8 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                 contentType: "application/json",
                 data: JSON.stringify({
                     'toAccount': user,
-                    'text': content
+                    'text': content,
+                    'isPublish':'true'
                 }),
                 success: function (data) {
                     // 分页设置
@@ -188,9 +189,26 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                         elem: 'test1', //test1是ID，不用加#号
                         count: data.totalMessages,
                         theme: '#07A8C5',
-                        jump: function (obj, first) {
-                            if (!first) {
-                                alert('new')
+                        jump: function (obj,first) {
+                            let curPage = obj.curr;
+                            if(!first) {
+                                $.ajax({
+                                    url:'http://47.100.226.85:8080/find-friends/message/refresh',
+                                    xhrFields:{
+                                        withCredentials:true
+                                    },
+                                    data:JSON.stringify({
+                                        ownerAccount: user,
+                                        pageNumber:curPage,
+                                        isPublish:'false'
+                                    }), // 参数是页码
+                                    type:'post',
+                                    contentType:'application/json',
+                                    success:function (data) {
+                                        console.log(data);
+                                        updateContent(data.messages);
+                                    },
+                                });
                             }
                         }
                     });
@@ -232,9 +250,26 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                             elem: 'test1', //test1是ID，不用加#号
                             count: parseInt(data),
                             theme: '#07A8C5',
-                            jump: function (obj, first) {
-                                if (!first) {
-                                    alert('new')
+                            jump: function (obj,first) {
+                                let curPage = obj.curr;
+                                if(!first) {
+                                    $.ajax({
+                                        url:'http://47.100.226.85:8080/find-friends/message/refresh',
+                                        xhrFields:{
+                                            withCredentials:true
+                                        },
+                                        data:JSON.stringify({
+                                            ownerAccount: user,
+                                            pageNumber:curPage,
+                                            isPublish:'false'
+                                        }), // 参数是页码
+                                        type:'post',
+                                        contentType:'application/json',
+                                        success:function (data) {
+                                            console.log(data);
+                                            updateContent(data.messages);
+                                        },
+                                    });
                                 }
                             }
                         });
@@ -410,6 +445,7 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
             $(window).attr('location', 'login.html');
             // 清除当前用户的cookies和账户
             localStorage.removeItem('UserAccount');
+            localStorage.removeItem('friendAccount');
             $.ajax({
                 type: 'post',
                 xhrFields: {

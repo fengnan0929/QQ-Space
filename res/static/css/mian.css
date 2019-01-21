@@ -648,8 +648,8 @@ body {
 .leftBar .friendList .friend-items .item-head {
     width: 100%;
     height: 70px;
-    background: url("../../../res/layui/images/face/100.jpeg") center center;
-    background-size: 100%;
+   /* background: url("../../../res/layui/images/face/100.jpeg") center center;
+    background-size: 100%;*/
 }
 
 /*好友列表 end*/
@@ -709,8 +709,8 @@ body {
     height: 120px;
     box-sizing: border-box;
     border: 4px solid #FFF;
-    background: url("../../../res/layui/images/face/100.jpeg") center center;
-    background-size: 100%;
+   /* background: url("../../../res/layui/images/face/100.jpeg") center center;
+    background-size: 100%;*/
 }
 
 .nick {
@@ -842,8 +842,8 @@ body {
     height: 60px;
     border-radius: 30px;
     float: left;
-    background: url("../../../res/layui/images/face/100.jpeg") center center;
-    background-size: 100%;
+   /* background: url("../../../res/layui/images/face/100.jpeg") center center;
+    background-size: 100%;*/
 }
 
 .nickname {

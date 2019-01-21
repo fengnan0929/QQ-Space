@@ -42,7 +42,7 @@
     display: inline-block;
     width: 90px;
     height: 90px;
-    background: url("../../../res/layui/images/face/100.jpeg") center center;
+   /* background: url("../../../res/layui/images/face/100.jpeg") center center;*/
     background-size: 100%;
     float: right;
     color: #FFFFFF;

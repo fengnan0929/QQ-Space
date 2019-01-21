@@ -175,6 +175,7 @@
 <script>
     $(function () {
         let user = JSON.parse(localStorage.getItem('UserAccount'));
+        let preSex;
         // 获取个人资料数据
         $.ajax({
             url:'http://47.100.226.85:8080/find-friends/user/personal',
@@ -195,6 +196,7 @@
                     backgroundSize: '100%'
                 });
                 $("input:radio[name='sex'][value='" + data.sex + "']").prop("checked", "checked");
+                preSex = data.sex;
             }
         });
 
@@ -279,7 +281,7 @@
                     let userInfo= {
                         nickname:$nickname.val(),
                         motto:$motto.val(),
-                        sex: $sex.attr('value'),
+                        sex: $("input:radio[name='sex'][checked='checked']").attr('value')|| preSex,
                         age:$age.val(),
                         xinzuo:$xinzuo.val()
                     };

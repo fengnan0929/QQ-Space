@@ -119,7 +119,6 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
     $(function () {
         $('#LAY-msg-box').delegate('span', 'click', function () {
             let messageID = $(this).parents('.info-box').children('.messageID').text();
-            console.log(messageID);
             if ($(this).hasClass('like')) {
                 if (!($(this).hasClass("layblog-this"))) {
                     this.text = '已赞';
@@ -223,6 +222,71 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
         }
     });
     // 留言提交按钮 end
+
+
+    // start 给朋友留言
+    $('#item-btn1').on('click', function () {
+        var elemCont = $('#LAY-msg-content'), content = elemCont.val();
+
+        if (content.replace(/\s/g, '') == "") {
+            layer.msg('请先输入留言');
+            return elemCont.focus();
+        }
+        else {
+            // 从本地获取被访问人信息
+            let user = JSON.parse(localStorage.getItem('friendAccount'));
+            $.ajax({
+                url: 'http://47.100.226.85:8080/find-friends/message/refresh',
+                type: 'post',
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'toAccount': user,
+                    'text': content,
+                    'isPublish':'true'
+                }),
+                success: function (data) {
+                    // 分页设置
+                    layui.laypage.render({
+                        elem: 'test1', //test1是ID，不用加#号
+                        count: data.totalMessages,
+                        theme: '#07A8C5',
+                        jump: function (obj,first) {
+                            let curPage = obj.curr;
+                            if(!first) {
+                                $.ajax({
+                                    url:'http://47.100.226.85:8080/find-friends/message/refresh',
+                                    xhrFields:{
+                                        withCredentials:true
+                                    },
+                                    data:JSON.stringify({
+                                        ownerAccount: user,
+                                        pageNumber:curPage,
+                                        isPublish:'false'
+                                    }), // 参数是页码
+                                    type:'post',
+                                    contentType:'application/json',
+                                    success:function (data) {
+                                        console.log(data);
+                                        updateContent(data.messages);
+                                    },
+                                });
+                            }
+                        }
+                    });
+                    // 更新页面内容
+                    updateContent(data.messages);
+                    elemCont.val('');
+                    layer.msg('留言成功', {
+                        icon: 1
+                    })
+                }
+            });
+        }
+    });
+    // 给朋友留言 end
 
     // start 留言删除
     $(function () {

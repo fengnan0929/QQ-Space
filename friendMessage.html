@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>好友留言板-闲言</title>
+    <title>他的留言板-闲言</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="res/layui/css/layui.css">
     <link rel="stylesheet" href="res/static/css/mian.css">
@@ -25,7 +25,7 @@
         </form>
         <div class="blog-nav pull-right">
             <ul class="layui-nav pull-left">
-                <li class="layui-nav-item"><a href="friendIndex.html">好友主页</a></li>
+                <li class="layui-nav-item"><a href="friendIndex.html">他的主页</a></li>
                 <li class="layui-nav-item  layui-this"><a href="friendMessage.html">留言板</a></li>
             </ul>
             <a href="#" class="personal pull-left  layui-nav-item exit" style="font-size: 16px;">
@@ -40,7 +40,7 @@
         </div>
     </div>
     <ul class="pop-nav" id="pop-nav">
-        <li><a href="friendIndex.html">好友主页</a></li>
+        <li><a href="friendIndex.html">他的主页</a></li>
         <li><a href="friendMessage.html">留言板</a></li>
     </ul>
 </div>
@@ -57,7 +57,7 @@
         <div class="contar-wrap" id="contar-wrap">
             <form class="layui-form" action="">
                 <div class="layui-form-item layui-form-text">
-                    <textarea class="layui-textarea" id="LAY-msg-content" style="resize:none"></textarea>
+                    <textarea class="layui-textarea" id="LAY-msg-content" style="resize:none">既然都来了，就留下点什么吧...</textarea>
                 </div>
             </form>
             <div class="item-btn">
@@ -91,6 +91,10 @@
     $(function () {
         // 初始化用户信息
         let user = JSON.parse(localStorage.getItem('friendAccount'));
+        //解决placeholder问题
+        $('#LAY-msg-content').on('focus',function () {
+            $(this).text('');
+        });
 
         $.ajax({
             url:'http://47.100.226.85:8080/find-friends/look/messages',

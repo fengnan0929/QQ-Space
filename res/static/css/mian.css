@@ -596,6 +596,9 @@ body {
     box-sizing: border-box;
     color: #242c2d;
     font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .leftBar .personal-intro i {
@@ -642,7 +645,11 @@ body {
 }
 
 .leftBar .friendList .friend-items span {
+    width: 100%;
     display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .leftBar .friendList .friend-items .item-head {

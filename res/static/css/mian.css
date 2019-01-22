@@ -638,6 +638,7 @@ body {
     box-sizing: border-box;
     text-align: center;
     color: #242c2d;
+    position: relative;
 }
 
 .leftBar .friendList .friend-items li:hover {
@@ -657,6 +658,28 @@ body {
     height: 70px;
    /* background: url("../../../res/layui/images/face/100.jpeg") center center;
     background-size: 100%;*/
+}
+
+.cancelFollow{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    opacity: 0;
+}
+.cancelFollow div{
+    width: 20px;
+    height: 20px;
+    background:url("../../static/images/action_icons.png")  -71px -41px  no-repeat;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.cancelFollow:hover{
+    display: block;
+    opacity: 0.8;
 }
 
 /*好友列表 end*/

@@ -559,12 +559,13 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
                                         data: JSON.stringify({"email":friendMail}),
                                         contentType: "application/json",
                                     });
-                                    newfriend = `<li>
+                                    newfriend = `<li class="friendBox">
                                         <span class="item-head"
                                               style="background:url('${data[0].headpic}') center center;background-size: 100%"></span>
                                         <span>${data[0].name}</span>
                                         <span class="friendEmail"
                                               style="display: none">${data[0].email}</span>
+                                               <div class="cancelFollow"><div class="canclebtn"></div></div>
                                     </li>`;
                                     $('.friend-items').append(newfriend);
                                     $('.search-output').css('display','none');

@@ -91,7 +91,7 @@ function findfriend(friend){
                                 <span class="search-name">${friend[i].name}</span>
                                 <span class="search-mail">(${friend[i].email})</span>
                                 <span class=${(friend[i].friends)?"follow":"new"} id=${friend[i].email}>${(friend[i].friends)?'已关注':'关注+'}</span>
-                            </li>`
+                              </li>`
     }
     return content;
 }
